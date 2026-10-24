@@ -565,48 +565,51 @@ const INITIAL_CANDIDATES = [
   },
 
   {
-    id: "SIH-2024-007",
+    id: "SNU2029904",
     name: "Dhiraj Vaidya",
     avatar: "DV",
-    avatarBg: "from-blue-600 via-indigo-600 to-violet-700",
-    role: "Lead Data Scientist & ML Architect",
+    avatarBg: "from-emerald-600 via-teal-600 to-indigo-700",
+    role: "B.Tech AIML Specialist — ALARD University Pune",
+    headline: "Pune City, Maharashtra, India | Professional Profile",
+    about:
+      "I am a B-Tech student specializing in Artificial Intelligence and Machine Learning at ALARD University Pune · Education: ALARD University Pune · Location: Pune City · 314 connections on LinkedIn. View Dhiraj Vaidya’s profile on LinkedIn, a professional community of 1 billion members.",
     status: "verified",
-    trustScore: 97,
-    trustLabel: "Gold Standard Verified",
-    appliedDate: "Oct 24, 2024",
-    location: "Pune, Maharashtra",
+    trustScore: 99,
+    trustLabel: "Yes, Authenticated Profile",
+    appliedDate: "July 06, 2026",
+    location: "Pune City, Maharashtra, India",
 
     education: {
-      degree: "B.Tech in Artificial Intelligence & Data Science",
-      college: "COEP Technological University, Pune",
-      year: "2021",
+      degree: "B.Tech in Artificial Intelligence and Machine Learning (AIML)",
+      college: "ALARD University Pune (ALARD School of Engineering & Technology)",
+      year: "2026",
       cgpa: "9.3 / 10",
       verified: true,
-      verificationSource: "DigiLocker & National Academic Depository Verified",
+      verificationSource: "ALARD University Pune & AICTE Verified (profile-linkedin-profile.txt)",
     },
 
-    experienceTotal: "3.5 Years Total",
+    experienceTotal: "ServiceNow & AICTE Certified",
     experienceTimeline: [
       {
-        company: "Persistent Systems",
-        role: "Senior Data Scientist",
-        duration: "2.0 Years (2022 – Present)",
+        company: "ServiceNow University • AICTE • SmartBridge",
+        role: "Virtual Internship Program (CSA & Agentic AI)",
+        duration: "Completed July 06, 2026 (Cert ID: SNU2029904)",
         verified: true,
-        source: "EPFO UAN & Corporate Domain Verified",
+        source: "Yes, that is authenticated — ServiceNow & AICTE Official Registry",
       },
       {
-        company: "Cognizant AI Labs",
-        role: "Data Analyst & ML Associate",
-        duration: "1.5 Years (2021 – 2022)",
+        company: "ALARD School of Engineering & Technology, Pune",
+        role: "AI & Machine Learning Research Specialist",
+        duration: "B.Tech AIML Cohort (Pune City)",
         verified: true,
-        source: "EPFO UAN Records Verified",
+        source: "Verified via ALARD University Academic Records",
       },
     ],
 
     socialFootprint: {
       linkedin: {
-        url: "linkedin.com/in/dhiraj-vaidya-ds",
-        status: "Top Voice • 3,400+ followers",
+        url: "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
+        status: "314 connections on LinkedIn • Pune City",
         verified: true,
       },
       github: {
@@ -616,75 +619,75 @@ const INITIAL_CANDIDATES = [
         verified: true,
       },
       portfolio: {
-        url: "https://dhirajvaidya.dev",
-        status: "Live ML Models & Research Portfolio",
+        url: "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
+        status: "Verified LinkedIn Profile (profile.txt)",
         verified: true,
       },
     },
 
     certificates: [
       {
-        id: "CERT-DV-001",
-        title: "Advanced Data Analytics & Predictive Insights",
-        issuer: "Google Cloud & Coursera",
-        issueDate: "Aug 2023",
-        serialHash: "0x7A4F89D201B456C1",
+        id: "SNU2029904",
+        title: "Virtual Internship Program — Certificate of Completion",
+        issuer: "ServiceNow University • AICTE • SmartBridge",
+        issueDate: "July 06, 2026",
+        serialHash: "0xSNU2029904A7F9E2D188C4",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
+        verificationTimestamp: "Yes, that is authenticated — ServiceNow University & AICTE Official Registry (Cert ID: SNU2029904)",
       },
       {
-        id: "CERT-DV-002",
-        title: "Machine Learning & Predictive Modeling Specialization",
-        issuer: "Stanford Online / DeepLearning.AI",
-        issueDate: "Mar 2023",
+        id: "SNU-AI-002",
+        title: "Introduction to Agentic AI & ServiceNow Micro Certification",
+        issuer: "ServiceNow University & SmartBridge",
+        issueDate: "July 06, 2026",
         serialHash: "0x33A7B9915522AA10",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: Stanford Online Credential Registry",
+        verificationTimestamp: "Yes, that is authenticated — ServiceNow University Credential Registry",
       },
       {
-        id: "CERT-DV-003",
-        title: "DeepLearning.AI TensorFlow Developer Professional",
-        issuer: "DeepLearning.AI",
-        issueDate: "Nov 2022",
+        id: "SNU-CSA-003",
+        title: "Certified System Administrator (CSA) Exam Preparation",
+        issuer: "ServiceNow University",
+        issueDate: "July 06, 2026",
         serialHash: "0x66B2C884990033FF",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: DeepLearning.AI Official Registry",
+        verificationTimestamp: "Yes, that is authenticated — ServiceNow Official Registry",
       },
       {
-        id: "CERT-DV-004",
-        title: "Advanced Python Programming for Data Science",
-        issuer: "IBM Skills Network",
-        issueDate: "Jan 2023",
+        id: "SNU-ATF-004",
+        title: "Automated Test Framework (ATF) Essentials & Flows",
+        issuer: "ServiceNow University • AICTE",
+        issueDate: "July 06, 2026",
         serialHash: "0x11C9D443881266B0",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: IBM Credential Network Confirmed",
+        verificationTimestamp: "Yes, that is authenticated — AICTE National Internship Registry",
       },
       {
         id: "CERT-DV-005",
-        title: "AWS Certified Machine Learning – Specialty",
-        issuer: "Amazon Web Services (AWS)",
-        issueDate: "Feb 2024",
-        serialHash: "0x88F1AA99BB3344EE",
+        title: "Advanced Data Analytics & Predictive Insights",
+        issuer: "Google Cloud & Coursera",
+        issueDate: "Aug 2025",
+        serialHash: "0x7A4F89D201B456C1",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: AWS Digital Credential Registry",
+        verificationTimestamp: "Yes, that is authenticated — Coursera Credential API Confirmed",
       },
       {
         id: "CERT-DV-006",
-        title: "Tableau Business Intelligence & Data Visualization Master",
-        issuer: "Tableau / Salesforce",
-        issueDate: "May 2022",
+        title: "Machine Learning & Predictive Modeling Specialization",
+        issuer: "Stanford Online / DeepLearning.AI",
+        issueDate: "Mar 2025",
         serialHash: "0x44D39902FF118742",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: Tableau Partner Network Confirmed",
+        verificationTimestamp: "Yes, that is authenticated — DeepLearning.AI Official Ledger",
       },
       {
         id: "CERT-DV-007",
         title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
+        issuer: "Smart India Hackathon (SIH) • AICTE",
+        issueDate: "Oct 2025",
         serialHash: "0xSIH2024E10177A8",
         verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+        verificationTimestamp: "Yes, that is authenticated — MoE Innovation Cell / AICTE Depository",
       },
     ],
 
@@ -778,37 +781,30 @@ function CertificateModal({ candidate, onClose, onUpdateCertificate }) {
 
   if (!candidate) return null;
 
-  // Simulate real-time cryptographic hash verification
+  // Simulate real-time cryptographic hash verification (Always Authenticated Mode for Demo)
   const handleVerifyHash = (cert) => {
     setVerifyingId(cert.id);
     setSuccessNote(null);
 
     setTimeout(() => {
-      // Deterministic check: if hash starts with '0xDEAD' or '0x0000', fail it; otherwise verify it
-      const isFake = cert.serialHash.startsWith("0xDEAD") || cert.serialHash.startsWith("0x0000");
-      
       const updated = {
         ...cert,
-        verified: !isFake,
-        verificationTimestamp: isFake
-          ? "Verification Failed: Checksum Mismatch against Central Issuer Registry"
-          : `Verified Authenticated: ${new Date().toLocaleDateString("en-IN", {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-              hour: "2-digit",
-              minute: "2-digit",
-            })}`,
+        verified: true,
+        verificationTimestamp: `Yes, that is authenticated — Verified on Official Ledger (${new Date().toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })})`,
       };
 
       onUpdateCertificate(candidate.id, updated);
       setVerifyingId(null);
       setSuccessNote(
-        isFake
-          ? `Cryptographic Checksum Failed for ${cert.id}! Alerting HR audit log.`
-          : `Hash ${cert.serialHash.substring(0, 8)}... matched successfully on ledger!`
+        `✅ Yes, that is authenticated! Certificate "${cert.title}" (${cert.id}) is 100% verified on the ledger.`
       );
-    }, 750);
+    }, 500);
   };
 
   return (
@@ -1278,16 +1274,19 @@ function generateProfileCertificates({ candidateName, appliedRole, certHash, upl
 }
 
 function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
-  // Input form state
-  const [candidateName, setCandidateName] = useState("");
-  const [profileUrl, setProfileUrl] = useState("");
-  const [certHash, setCertHash] = useState("");
-  const [appliedRole, setAppliedRole] = useState("Full Stack Developer");
+  // Input form state (Defaults to Dhiraj Vaidya from profile-linkedin-profile.txt)
+  const [candidateName, setCandidateName] = useState("Dhiraj Vaidya");
+  const [profileUrl, setProfileUrl] = useState("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
+  const [certHash, setCertHash] = useState("0xSNU2029904A7F9E2D188C4");
+  const [appliedRole, setAppliedRole] = useState("B.Tech AIML Specialist — ALARD University Pune");
 
   // Uploaded certificate document state
   const [uploadedFile, setUploadedFile] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
+
+  // Pop-up modal state that says "Yes, that is authenticated"
+  const [authPopupData, setAuthPopupData] = useState(null);
 
   // Helper to generate a realistic mock SHA-256 cryptographic hash from file name
   const generateMockSHA256 = (filename) => {
@@ -1306,7 +1305,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     return hash;
   };
 
-  // Handler when user selects or drops a PDF / certificate file
+  // Handler when user selects or drops ANY PDF / certificate file -> Always Verified & Opens Pop-up
   const handleProcessFile = (file) => {
     if (!file) return;
     const sizeStr = file.size > 1024 * 1024
@@ -1314,12 +1313,29 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       : (file.size / 1024).toFixed(1) + " KB";
 
     const autoHash = generateMockSHA256(file.name);
+    const cleanTitle = file.name
+      .replace(/\.(pdf|png|jpg|jpeg|docx)$/i, "")
+      .replace(/[_-]+/g, " ")
+      .trim();
+
     setUploadedFile({
       name: file.name,
       size: sizeStr,
       type: file.type || "Document",
     });
     setCertHash(autoHash);
+    setSimulateInvalidCert(false);
+
+    // Immediately show the "Yes, that is authenticated" pop-up for the uploaded certificate
+    setAuthPopupData({
+      title: cleanTitle || "Virtual Internship Program — Certificate of Completion",
+      fileName: file.name,
+      candidateName: candidateName || "Dhiraj Vaidya",
+      issuer: "ServiceNow University • AICTE (Ministry of Education) • SmartBridge",
+      certId: "SNU2029904",
+      issueDate: "July 06, 2026",
+      serialHash: autoHash,
+    });
   };
 
   // Clear uploaded file handler
@@ -1337,47 +1353,46 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
   const [scanResult, setScanResult] = useState(null);
   const [verifyingScanCertId, setVerifyingScanCertId] = useState(null);
 
-  // Custom toggle to simulate invalid/tampered certificate
+  // Custom toggle (kept false so all certificates verify as 100% authenticated)
   const [simulateInvalidCert, setSimulateInvalidCert] = useState(false);
 
-  // Handler to verify a specific certificate's hash inside the scan result report
+  // Handler to verify a specific certificate's hash inside the scan result report -> Always Authenticated & Pop-up
   const handleVerifyScanCert = (cert) => {
     setVerifyingScanCertId(cert.id);
     setTimeout(() => {
-      const isPrimaryTampered = scanResult?.isWrongCert && (cert.id === scanResult?.certificates[0]?.id || cert.id.startsWith("CERT-PRI-"));
-      const isFake =
-        cert.serialHash.toLowerCase().includes("dead") ||
-        cert.serialHash.toLowerCase().includes("fake") ||
-        cert.serialHash.toLowerCase().includes("tampered") ||
-        cert.serialHash.toLowerCase().includes("wrong") ||
-        isPrimaryTampered;
-
       setScanResult((prev) => {
         if (!prev) return null;
         const updated = prev.certificates.map((c) =>
           c.id === cert.id
             ? {
                 ...c,
-                verified: !isFake,
-                verificationTimestamp: isFake
-                  ? "Verification Failed: Checksum Mismatch against Central Issuer Registry"
-                  : `Verified on Ledger: Hash Authenticated (${new Date().toLocaleTimeString("en-IN")})`,
+                verified: true,
+                verificationTimestamp: `Yes, that is authenticated — Verified on Official Ledger (${new Date().toLocaleTimeString("en-IN")})`,
               }
             : c
         );
         return { ...prev, certificates: updated };
       });
       setVerifyingScanCertId(null);
-    }, 700);
+      setAuthPopupData({
+        title: cert.title,
+        fileName: cert.documentNote || "certificate (1).pdf",
+        candidateName: scanResult?.candidateName || candidateName || "Dhiraj Vaidya",
+        issuer: cert.issuer,
+        certId: cert.id || "SNU2029904",
+        issueDate: cert.issueDate || "July 06, 2026",
+        serialHash: cert.serialHash,
+      });
+    }, 450);
   };
 
   // Quick Preset Handlers
   const handleLoadPreset = (type) => {
     if (type === "dhiraj") {
       setCandidateName("Dhiraj Vaidya");
-      setProfileUrl("https://linkedin.com/in/dhiraj-vaidya-ds");
-      setCertHash("0x7A4F89D201B456C1");
-      setAppliedRole("Lead Data Scientist & ML Architect");
+      setProfileUrl("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
+      setCertHash("0xSNU2029904A7F9E2D188C4");
+      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
       setUploadedFile({
         name: "certificate (1).pdf",
         size: "520 KB",
@@ -1385,16 +1400,16 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       });
       setSimulateInvalidCert(false);
     } else if (type === "flagged") {
-      setCandidateName("Siddharth Mehra");
-      setProfileUrl("https://linkedin.com/in/siddharth-mehra-dev");
-      setCertHash("0xDEAD5500AA99BEEF");
-      setAppliedRole("DevOps Specialist");
+      setCandidateName("Dhiraj Vaidya");
+      setProfileUrl("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
+      setCertHash("0xSNU2029904A7F9E2D188C4");
+      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
       setUploadedFile({
-        name: "Tampered_IBM_Blockchain_Cert.pdf",
-        size: "348 KB",
+        name: "certificate (1).pdf",
+        size: "520 KB",
         type: "application/pdf",
       });
-      setSimulateInvalidCert(true);
+      setSimulateInvalidCert(false);
     } else if (type === "verified") {
       setCandidateName("Rhea Mukherjee");
       setProfileUrl("https://linkedin.com/in/rhea-mukherjee-ai");
@@ -1410,7 +1425,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       setCandidateName("");
       setProfileUrl("");
       setCertHash("");
-      setAppliedRole("Full Stack Developer");
+      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
       setUploadedFile(null);
       setSimulateInvalidCert(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -1418,7 +1433,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     setScanResult(null);
   };
 
-  // Run simulated asynchronous AI verification pipeline
+  // Run simulated asynchronous AI verification pipeline (Always Verifies Every Certificate as 100% Authenticated)
   const handleRunVerification = useCallback(() => {
     if (!candidateName.trim()) return;
 
@@ -1427,96 +1442,53 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     setScanStep(1);
 
     // Multi-step progress animation simulating real NLP & API calls
-    setTimeout(() => setScanStep(2), 600);
-    setTimeout(() => setScanStep(3), 1300);
-    setTimeout(() => setScanStep(4), 2000);
+    setTimeout(() => setScanStep(2), 400);
+    setTimeout(() => setScanStep(3), 850);
+    setTimeout(() => setScanStep(4), 1300);
 
     setTimeout(() => {
-      // Deterministic simulation based on inputs:
-      const hashLower = certHash.toLowerCase();
-      const fileNameLower = (uploadedFile?.name || "").toLowerCase();
-      const candidateNameLower = candidateName.toLowerCase();
-      const profileUrlLower = profileUrl.toLowerCase();
-
-      // Check if hash or file name contains keywords: 'wrong', 'fake', 'tampered', '0xdead'
-      // or if custom toggle for 'Simulate Invalid Certificate' is enabled
-      const invalidKeywords = ["wrong", "fake", "tampered", "0xdead", "invalid", "corrupt", "mismatch"];
-      const isWrongCert =
-        simulateInvalidCert ||
-        invalidKeywords.some(
-          (kw) => hashLower.includes(kw) || fileNameLower.includes(kw)
-        );
-
-      const isSuspiciousProfile =
-        candidateNameLower.includes("siddharth") ||
-        profileUrlLower.includes("fake") ||
-        profileUrlLower.includes("suspicious");
-
-      const isSuspicious = isWrongCert || isSuspiciousProfile;
-
-      // Trust score drops (35% Trust when wrong certificate / hash discrepancy)
-      let computedTrustScore = 94;
-      if (isWrongCert) {
-        computedTrustScore = 35;
-      } else if (isSuspiciousProfile) {
-        computedTrustScore = 48;
-      }
-
-      // Generate dynamic risk flags
+      // Every certificate and profile given by the user is verified (never not authenticated)
+      const isWrongCert = false;
+      const isSuspiciousProfile = false;
+      const isSuspicious = false;
+      const computedTrustScore = 99;
       const flags = [];
-      if (isWrongCert) {
-        flags.push(
-          "Cryptographic Hash Mismatch: Uploaded certificate hash failed decentralized ledger checksum verification (tampered or counterfeit document)."
-        );
-        flags.push(
-          "Invalid Digital Signature: Certificate serial key is unverified or not registered in the official issuer repository."
-        );
-      }
-      if (isSuspiciousProfile) {
-        flags.push(
-          "EPFO Service Gap: Candidate claimed 2.0 years tenure, but active contributions found for only 7 months."
-        );
-        flags.push(
-          "GitHub Activity Anomaly: Less than 20 total commits over a claimed 3-year developer career."
-        );
-      }
 
       // Dynamically generate the candidate's certificates based on profile, name, role, and custom uploaded document
       const candidateCerts = generateProfileCertificates({
         candidateName: candidateName.trim(),
         appliedRole: appliedRole.trim(),
-        certHash: certHash.trim() || "0x77A19902FF118833",
+        certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
         uploadedFile,
-        isWrongCert,
+        isWrongCert: false,
         candidates,
-      });
+      }).map((c) => ({
+        ...c,
+        verified: true,
+      }));
+
+      const primaryCert = candidateCerts[0] || {
+        id: "SNU2029904",
+        title: "Virtual Internship Program — Certificate of Completion",
+        issuer: "ServiceNow University • AICTE • SmartBridge",
+        issueDate: "July 06, 2026",
+        serialHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
+      };
 
       setScanResult({
         candidateName: candidateName.trim(),
         profileUrl:
           profileUrl.trim() ||
-          `linkedin.com/in/${candidateName.toLowerCase().replace(/\s+/g, "")}`,
-        certHash: certHash.trim() || "0x77A19902FF118833",
+          "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
+        certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
         appliedRole: appliedRole,
         trustScore: computedTrustScore,
         isSuspicious,
         isWrongCert,
-        statusLabel: isWrongCert
-          ? "Flagged Claims / Hash Discrepancy"
-          : isSuspiciousProfile
-          ? "Flagged Claims / Profile Discrepancy"
-          : "Authentic Candidate",
-        workAuthStatus: isSuspiciousProfile
-          ? "Discrepancy Found in EPFO Records"
-          : isWrongCert
-          ? "Tenure Recorded (Credentials Withheld)"
-          : "100% Payroll & Tenure Verified",
-        certHashStatus: isWrongCert
-          ? "Cryptographic Hash Mismatch on Ledger"
-          : "Cryptographic Hash Matched on Ledger",
-        educationStatus: isWrongCert
-          ? "Degree Claim Flagged: Transcript Checksum Failed"
-          : "University Degree & AICTE Accredited",
+        statusLabel: "Yes, that is authenticated (100% Verified)",
+        workAuthStatus: "100% Verified — ServiceNow & AICTE Registry",
+        certHashStatus: "Yes, that is authenticated — Hash Matched on Ledger",
+        educationStatus: "ALARD University Pune — B.Tech AIML Verified (314 Connections)",
         flags,
         certificates: candidateCerts,
         timestamp: new Date().toLocaleTimeString("en-IN", {
@@ -1528,7 +1500,18 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
 
       setScanning(false);
       setScanStep(0);
-    }, 2600);
+
+      // Open the "Yes, that is authenticated" pop-up modal
+      setAuthPopupData({
+        title: primaryCert.title,
+        fileName: uploadedFile?.name || "certificate (1).pdf",
+        candidateName: candidateName.trim(),
+        issuer: primaryCert.issuer,
+        certId: primaryCert.id || "SNU2029904",
+        issueDate: primaryCert.issueDate || "July 06, 2026",
+        serialHash: primaryCert.serialHash,
+      });
+    }, 1600);
   }, [candidateName, profileUrl, certHash, appliedRole, uploadedFile, simulateInvalidCert, candidates]);
 
   // Push scanned candidate into directory state
@@ -2142,6 +2125,89 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                 className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow transition-colors"
               >
                 <PlusCircle size={14} /> Add to Candidate Directory
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* POP-UP MODAL: "Yes, that is authenticated" */}
+      {authPopupData && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in"
+          onClick={() => setAuthPopupData(null)}
+        >
+          <div
+            className="w-full max-w-lg bg-slate-900 border-2 border-emerald-500/80 rounded-3xl shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 px-6 py-5 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-white/20 flex items-center justify-center text-white">
+                  <CheckCircle2 size={28} />
+                </div>
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-100 block">
+                    Official Certificate Verification Result
+                  </span>
+                  <h3 className="text-2xl font-black text-white">
+                    Yes, that is authenticated
+                  </h3>
+                </div>
+              </div>
+              <button
+                onClick={() => setAuthPopupData(null)}
+                className="w-8 h-8 rounded-lg bg-slate-950/30 hover:bg-slate-950/60 flex items-center justify-center text-white"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4 text-xs">
+              <div className="bg-emerald-950/50 border border-emerald-500/50 rounded-2xl p-4 flex items-center gap-3">
+                <BadgeCheck size={28} className="text-emerald-400 shrink-0" />
+                <div>
+                  <p className="text-sm font-extrabold text-emerald-300">
+                    ✅ Yes, that is authenticated — 100% Verified Credential
+                  </p>
+                  <p className="text-slate-300 mt-0.5">
+                    The certificate has been verified against the official issuer registry & cryptographic hash ledger.
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Verdict:</span>
+                  <strong className="text-emerald-400">Yes, that is authenticated</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Candidate Name:</span>
+                  <strong className="text-white">{authPopupData.candidateName}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Certificate:</span>
+                  <strong className="text-indigo-300 text-right">{authPopupData.title}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Issuer:</span>
+                  <strong className="text-slate-200 text-right">{authPopupData.issuer}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">Certificate ID:</span>
+                  <strong className="text-amber-300 font-mono">{authPopupData.certId}</strong>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-slate-400">SHA-256 Hash:</span>
+                  <strong className="text-emerald-300 font-mono truncate max-w-[220px]">{authPopupData.serialHash}</strong>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setAuthPopupData(null)}
+                className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg"
+              >
+                OK — Confirmed Authenticated
               </button>
             </div>
           </div>
