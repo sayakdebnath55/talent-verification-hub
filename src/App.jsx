@@ -1108,10 +1108,11 @@ function parseLinkedInUrl(rawInput, matchedCandidate) {
   };
 }
 
-// Helper 3: Dynamic Certificate Generator for LinkedIn Profiles & Custom Candidate Searches
-// - Automatically generates 4 realistic verified certificates mapped to the candidate (never 0 credentials).
-// - Upload Override: If a user uploads a PDF certificate file, prepends that uploaded document at Index #0
-//   as the #1 Primary Certificate while keeping the candidate's generated certificates below it.
+// Helper 3: Universal Dynamic Certificate Fallback for Any Candidate Search
+// - Whenever any candidate name is typed or LinkedIn URL is pasted, automatically generates 4 professional verified certificates.
+// - Never returns 0 credentials.
+// - Primary Upload Priority: If a user uploads a PDF certificate file, places that file at Index #0 as the
+//   #1 Primary Certificate at the top, followed by the 3 generated certificates (4 total).
 function generateProfileCertificates({
   candidateName,
   appliedRole,
@@ -1155,14 +1156,14 @@ function generateProfileCertificates({
         )
       : null;
 
-  // 2. Build the 4 dynamic verified certificates mapped to this candidate
+  // 2. Universal 4 professional verified certificates mapped to the candidate
   const generatedCerts = [
     {
-      id: `CERT-LI-${Math.abs(cleanName.length * 137 + 101)}`,
-      title: "LinkedIn Verified Skill: Python & Data Analysis",
-      issuer: "LinkedIn Learning • Official Skill Assessment",
+      id: `CERT-PY-${Math.abs(cleanName.length * 137 + 101)}`,
+      title: "Python for Data Science",
+      issuer: "Coursera • IBM Skills Network",
       issueDate: "Verified 2026",
-      serialHash: makeCandidateHash("linkedin-python-da"),
+      serialHash: makeCandidateHash("python-data-science"),
       verified: true,
       verificationTimestamp: `Verified on Ledger: Mapped to ${cleanName}${
         linkedinUrl ? " via LinkedIn Profile" : ""
@@ -1170,34 +1171,34 @@ function generateProfileCertificates({
     },
     {
       id: `CERT-AICTE-${Math.abs(cleanName.length * 251 + 202)}`,
-      title: "AICTE Virtual Internship Certificate",
+      title: "AICTE Virtual Internship",
       issuer: "AICTE • National Internship Portal",
       issueDate: "2026 Cohort",
-      serialHash: makeCandidateHash("aicte-internship"),
+      serialHash: makeCandidateHash("aicte-virtual-internship"),
       verified: true,
       verificationTimestamp: `Verified on Ledger: ${cleanRole}`,
     },
     {
-      id: `CERT-CLD-${Math.abs(cleanName.length * 389 + 303)}`,
-      title: "Cloud Fundamentals Certification",
-      issuer: "AWS Training & Cloud Academy",
+      id: `CERT-ML-${Math.abs(cleanName.length * 389 + 303)}`,
+      title: "Machine Learning Foundations",
+      issuer: "Stanford Online • DeepLearning.AI",
       issueDate: "Verified 2025",
-      serialHash: makeCandidateHash("cloud-fundamentals"),
+      serialHash: makeCandidateHash("ml-foundations"),
       verified: true,
-      verificationTimestamp: "Verified on Cloud Credential Registry",
+      verificationTimestamp: "Verified on DeepLearning.AI Credential Registry",
     },
     {
-      id: `CERT-WEB-${Math.abs(cleanName.length * 463 + 404)}`,
-      title: "Industry Web Development Credential",
-      issuer: "Coursera • Meta Developer Network",
+      id: `CERT-CLD-${Math.abs(cleanName.length * 463 + 404)}`,
+      title: "Cloud Computing Credential",
+      issuer: "Amazon Web Services (AWS) Training",
       issueDate: "Verified 2025",
-      serialHash: makeCandidateHash("industry-web-dev"),
+      serialHash: makeCandidateHash("cloud-computing-credential"),
       verified: true,
       verificationTimestamp: "Verified on Decentralized Credential Ledger",
     },
   ];
 
-  // Combine any explicit candidate record certificates with the generated certificates (4-5 total)
+  // Build candidate's 4 base certificates (combining any record certificates + universal generated certificates)
   let candidateCertList = [];
   if (
     matchedCandidate &&
@@ -1215,8 +1216,8 @@ function generateProfileCertificates({
     candidateCertList = [...generatedCerts];
   }
 
-  // 3. Upload Override: If user uploaded a PDF/image file, prepend it at Index #0 as #1 Primary Certificate
-  // while keeping the candidate's generated certificates below it
+  // 3. Primary Upload Priority: If user explicitly uploads a PDF/image file,
+  // place that file at Index #0 as the #1 Primary Certificate, followed by the 3 generated certificates
   if (uploadedFile && uploadedFile.name) {
     const parsedFileTitle = uploadedFile.name
       .replace(/\.(pdf|png|jpg|jpeg|docx)$/i, "")
@@ -1236,16 +1237,15 @@ function generateProfileCertificates({
         : `Verified on Ledger: #1 Primary Certificate (${uploadedFile.name})`,
     };
 
-    const belowCerts = candidateCertList.map((c) => ({
+    const threeGeneratedCerts = candidateCertList.slice(0, 3).map((c) => ({
       ...c,
       verified: true,
     }));
 
-    return [primaryUploadedCert, ...belowCerts];
+    return [primaryUploadedCert, ...threeGeneratedCerts];
   }
 
-  // 4. When no file is uploaded, return the candidate's 4 generated certificates
-  // (Index #0 reflects any custom hash or tamper simulation toggle)
+  // 4. When no file is uploaded, return the 4 verified certificates
   return candidateCertList.map((cert, idx) => {
     const isPrimaryFlagged = isWrongCert && idx === 0;
     return {
@@ -2593,124 +2593,115 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               </span>
             </div>
 
-            {scanResult.certificates && scanResult.certificates.length > 0 ? (
-              <div className="max-h-[480px] overflow-y-auto pr-2 custom-scrollbar space-y-3">
-                {scanResult.certificates.map((cert, idx) => (
-                  <div
-                    key={cert.id + idx}
-                    className={`p-3.5 rounded-xl border transition-all ${
-                      cert.verified
-                        ? "bg-slate-800/40 border-slate-700/80 hover:border-emerald-500/50"
-                        : "bg-rose-950/20 border-rose-800/80 hover:border-rose-600"
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="text-sm font-bold text-white">
-                            {cert.title}
-                          </span>
-                          <span className="text-xs bg-slate-800 text-slate-300 font-semibold px-2 py-0.5 rounded border border-slate-700">
-                            {cert.issuer}
-                          </span>
-                          {cert.documentNote && (
-                            <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold bg-indigo-950/90 text-indigo-300 px-2 py-0.5 rounded border border-indigo-700/60 shadow-sm">
-                              <FileText
-                                size={11}
-                                className="text-indigo-400"
-                              />
-                              <span>Uploaded File: {cert.documentNote}</span>
+            <div className="max-h-[480px] overflow-y-auto pr-2 custom-scrollbar space-y-3">
+              {(scanResult.certificates || []).map((cert, idx) => (
+                <div
+                  key={cert.id + idx}
+                  className={`p-3.5 rounded-xl border transition-all ${
+                    cert.verified
+                      ? "bg-slate-800/40 border-slate-700/80 hover:border-emerald-500/50"
+                      : "bg-rose-950/20 border-rose-800/80 hover:border-rose-600"
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-bold text-white">
+                          {cert.title}
+                        </span>
+                        <span className="text-xs bg-slate-800 text-slate-300 font-semibold px-2 py-0.5 rounded border border-slate-700">
+                          {cert.issuer}
+                        </span>
+                        {cert.documentNote && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold bg-indigo-950/90 text-indigo-300 px-2 py-0.5 rounded border border-indigo-700/60 shadow-sm">
+                            <FileText size={11} className="text-indigo-400" />
+                            <span>
+                              #1 Primary Certificate: {cert.documentNote}
                             </span>
-                          )}
-                          {cert.verified ? (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
-                              <CheckCircle2 size={12} /> Authentic
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-800/60">
-                              <XCircle size={12} /> Hash Discrepancy
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="flex items-center gap-3 text-xs text-slate-400">
-                          <span>
-                            Issued:{" "}
-                            <strong className="text-slate-300">
-                              {cert.issueDate}
-                            </strong>
                           </span>
-                          <span>•</span>
-                          <span>
-                            Cert ID:{" "}
-                            <code className="text-slate-300 font-mono">
-                              {cert.id}
-                            </code>
+                        )}
+                        {cert.verified ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
+                            <CheckCircle2 size={12} /> Authentic
                           </span>
-                        </div>
-
-                        {/* Cryptographic Hash Bar */}
-                        <div className="mt-1.5 flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
-                          <Hash
-                            size={13}
-                            className="text-indigo-400 shrink-0"
-                          />
-                          <span className="text-slate-400 text-[11px]">
-                            Serial Hash:
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-800/60">
+                            <XCircle size={12} /> Hash Discrepancy
                           </span>
-                          <span
-                            className={`font-semibold ${
-                              cert.verified
-                                ? "text-indigo-300"
-                                : "text-rose-400"
-                            }`}
-                          >
-                            {cert.serialHash}
-                          </span>
-                        </div>
-
-                        <p className="text-[11px] text-slate-500 mt-1">
-                          {cert.verificationTimestamp}
-                        </p>
+                        )}
                       </div>
 
-                      {/* Verify Action Button */}
-                      <div className="sm:self-center shrink-0">
-                        <button
-                          type="button"
-                          onClick={() => handleVerifyScanCert(cert)}
-                          disabled={verifyingScanCertId === cert.id}
-                          className={`w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
-                            cert.verified
-                              ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
-                              : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-900/40"
+                      <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <span>
+                          Issued:{" "}
+                          <strong className="text-slate-300">
+                            {cert.issueDate}
+                          </strong>
+                        </span>
+                        <span>•</span>
+                        <span>
+                          Cert ID:{" "}
+                          <code className="text-slate-300 font-mono">
+                            {cert.id}
+                          </code>
+                        </span>
+                      </div>
+
+                      {/* Cryptographic Hash Bar */}
+                      <div className="mt-1.5 flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
+                        <Hash
+                          size={13}
+                          className="text-indigo-400 shrink-0"
+                        />
+                        <span className="text-slate-400 text-[11px]">
+                          Serial Hash:
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            cert.verified ? "text-indigo-300" : "text-rose-400"
                           }`}
                         >
-                          {verifyingScanCertId === cert.id ? (
-                            <>
-                              <RefreshCw
-                                size={12}
-                                className="animate-spin text-indigo-400"
-                              />
-                              <span>Auditing...</span>
-                            </>
-                          ) : (
-                            <>
-                              <Fingerprint size={12} />
-                              <span>Verify Hash Key</span>
-                            </>
-                          )}
-                        </button>
+                          {cert.serialHash}
+                        </span>
                       </div>
+
+                      <p className="text-[11px] text-slate-500 mt-1">
+                        {cert.verificationTimestamp}
+                      </p>
+                    </div>
+
+                    {/* Verify Action Button */}
+                    <div className="sm:self-center shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleVerifyScanCert(cert)}
+                        disabled={verifyingScanCertId === cert.id}
+                        className={`w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                          cert.verified
+                            ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
+                            : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-900/40"
+                        }`}
+                      >
+                        {verifyingScanCertId === cert.id ? (
+                          <>
+                            <RefreshCw
+                              size={12}
+                              className="animate-spin text-indigo-400"
+                            />
+                            <span>Auditing...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Fingerprint size={12} />
+                            <span>Verify Hash Key</span>
+                          </>
+                        )}
+                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4 text-xs text-slate-400 text-center">
-                No certificate document uploaded or hash entered for this candidate. Upload a PDF/image document above to verify.
-              </div>
-            )}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Flagged Risk Factors (if any) */}
