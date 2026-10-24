@@ -943,6 +943,9 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
   const [scanStep, setScanStep] = useState(0);
   const [scanResult, setScanResult] = useState(null);
 
+  // Custom toggle to simulate invalid/tampered certificate
+  const [simulateInvalidCert, setSimulateInvalidCert] = useState(false);
+
   // Quick Preset Handlers
   const handleLoadPreset = (type) => {
     if (type === "flagged") {
@@ -951,10 +954,11 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
       setCertHash("0xDEAD5500AA99BEEF");
       setAppliedRole("DevOps Specialist");
       setUploadedFile({
-        name: "IBM_Enterprise_Blockchain_Cert.pdf",
+        name: "Tampered_IBM_Blockchain_Cert.pdf",
         size: "348 KB",
         type: "application/pdf",
       });
+      setSimulateInvalidCert(true);
     } else if (type === "verified") {
       setCandidateName("Rhea Mukherjee");
       setProfileUrl("https://linkedin.com/in/rhea-mukherjee-ai");
@@ -965,12 +969,14 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
         size: "412 KB",
         type: "application/pdf",
       });
+      setSimulateInvalidCert(false);
     } else {
       setCandidateName("");
       setProfileUrl("");
       setCertHash("");
       setAppliedRole("Full Stack Developer");
       setUploadedFile(null);
+      setSimulateInvalidCert(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
     setScanResult(null);
@@ -991,38 +997,92 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
 
     setTimeout(() => {
       // Deterministic simulation based on inputs:
-      // If hash contains 'DEAD' or name contains 'Siddharth' or 'fake', flag it!
-      const isSuspicious =
-        certHash.toUpperCase().includes("DEAD") ||
-        candidateName.toLowerCase().includes("siddharth") ||
-        profileUrl.toLowerCase().includes("fake");
+      const hashLower = certHash.toLowerCase();
+      const fileNameLower = (uploadedFile?.name || "").toLowerCase();
+      const candidateNameLower = candidateName.toLowerCase();
+      const profileUrlLower = profileUrl.toLowerCase();
 
-      const computedTrustScore = isSuspicious ? 48 : 94;
+      // Check if hash or file name contains keywords: 'wrong', 'fake', 'tampered', '0xdead'
+      // or if custom toggle for 'Simulate Invalid Certificate' is enabled
+      const invalidKeywords = ["wrong", "fake", "tampered", "0xdead", "invalid", "corrupt", "mismatch"];
+      const isWrongCert =
+        simulateInvalidCert ||
+        invalidKeywords.some(
+          (kw) => hashLower.includes(kw) || fileNameLower.includes(kw)
+        );
+
+      const isSuspiciousProfile =
+        candidateNameLower.includes("siddharth") ||
+        profileUrlLower.includes("fake") ||
+        profileUrlLower.includes("suspicious");
+
+      const isSuspicious = isWrongCert || isSuspiciousProfile;
+
+      // Trust score drops (35% Trust when wrong certificate / hash discrepancy)
+      let computedTrustScore = 94;
+      if (isWrongCert) {
+        computedTrustScore = 35;
+      } else if (isSuspiciousProfile) {
+        computedTrustScore = 48;
+      }
+
+      // Generate dynamic risk flags
+      const flags = [];
+      if (isWrongCert) {
+        flags.push(
+          "Cryptographic Hash Mismatch: Uploaded certificate hash failed decentralized ledger checksum verification (tampered or counterfeit document)."
+        );
+        flags.push(
+          "Invalid Digital Signature: Certificate serial key is unverified or not registered in the official issuer repository."
+        );
+      }
+      if (isSuspiciousProfile) {
+        flags.push(
+          "EPFO Service Gap: Candidate claimed 2.0 years tenure, but active contributions found for only 7 months."
+        );
+        flags.push(
+          "GitHub Activity Anomaly: Less than 20 total commits over a claimed 3-year developer career."
+        );
+      }
 
       setScanResult({
         candidateName: candidateName.trim(),
-        profileUrl: profileUrl.trim() || `linkedin.com/in/${candidateName.toLowerCase().replace(/\s+/g, "")}`,
+        profileUrl:
+          profileUrl.trim() ||
+          `linkedin.com/in/${candidateName.toLowerCase().replace(/\s+/g, "")}`,
         certHash: certHash.trim() || "0x77A19902FF118833",
         appliedRole: appliedRole,
         trustScore: computedTrustScore,
         isSuspicious,
-        workAuthStatus: isSuspicious ? "Discrepancy Found in EPFO Records" : "100% Payroll & Tenure Verified",
-        certHashStatus: isSuspicious ? "Tampered Serial: Not found in Issuer Registry" : "Cryptographic Hash Matched on Ledger",
-        educationStatus: isSuspicious ? "Degree Verified with 7.1 CGPA" : "University Degree & AICTE Accredited",
-        flags: isSuspicious
-          ? [
-              "EPFO Service Gap: Candidate claimed 2.0 years tenure, but active contributions found for only 7 months.",
-              "Certificate Hash Invalid: Serial hash does not exist in Coursera/Meta verified registry.",
-              "GitHub Activity Anomaly: Less than 20 total commits over a claimed 3-year developer career.",
-            ]
-          : [],
-        timestamp: new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
+        isWrongCert,
+        statusLabel: isWrongCert
+          ? "Flagged Claims / Hash Discrepancy"
+          : isSuspiciousProfile
+          ? "Flagged Claims / Profile Discrepancy"
+          : "Authentic Candidate",
+        workAuthStatus: isSuspiciousProfile
+          ? "Discrepancy Found in EPFO Records"
+          : isWrongCert
+          ? "Tenure Recorded (Credentials Withheld)"
+          : "100% Payroll & Tenure Verified",
+        certHashStatus: isWrongCert
+          ? "Cryptographic Hash Mismatch on Ledger"
+          : "Cryptographic Hash Matched on Ledger",
+        educationStatus: isWrongCert
+          ? "Degree Claim Flagged: Transcript Checksum Failed"
+          : "University Degree & AICTE Accredited",
+        flags,
+        timestamp: new Date().toLocaleTimeString("en-IN", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }),
       });
 
       setScanning(false);
       setScanStep(0);
     }, 2600);
-  }, [candidateName, profileUrl, certHash, appliedRole]);
+  }, [candidateName, profileUrl, certHash, appliedRole, uploadedFile, simulateInvalidCert]);
 
   // Push scanned candidate into directory state
   const handlePushToDirectory = () => {
@@ -1277,6 +1337,30 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
                 </div>
               )}
             </div>
+
+            {/* Custom Toggle: Simulate Invalid Certificate / Tampered Hash */}
+            <div className="mt-3 flex items-center justify-between p-3 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-slate-700 transition-colors">
+              <div className="flex items-center gap-2.5">
+                <ShieldAlert size={16} className={simulateInvalidCert ? "text-rose-400" : "text-slate-500"} />
+                <div>
+                  <span className="text-xs font-semibold text-slate-200">
+                    Simulate Invalid Certificate / Tampered Hash
+                  </span>
+                  <p className="text-[10px] text-slate-500">
+                    Forces cryptographic checksum failure (drops trust to 35%) for testing/demo
+                  </p>
+                </div>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                <input
+                  type="checkbox"
+                  checked={simulateInvalidCert}
+                  onChange={(e) => setSimulateInvalidCert(e.target.checked)}
+                  className="sr-only peer"
+                />
+                <div className="w-9 h-5 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-600"></div>
+              </label>
+            </div>
           </div>
         </div>
 
@@ -1357,16 +1441,26 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
                 {scanResult.candidateName[0]}
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <h3 className="text-white font-black text-lg">{scanResult.candidateName}</h3>
                   <span
-                    className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${
+                    className={`text-xs font-bold px-3 py-1 rounded-full border flex items-center gap-1.5 ${
                       scanResult.isSuspicious
-                        ? "bg-rose-950/60 text-rose-300 border-rose-700"
+                        ? "bg-rose-950/80 text-rose-300 border-rose-700 shadow-md shadow-rose-950/50"
                         : "bg-emerald-950/60 text-emerald-300 border-emerald-700"
                     }`}
                   >
-                    {scanResult.isSuspicious ? "Flagged Discrepancy" : "Authentic Candidate"}
+                    {scanResult.isSuspicious ? (
+                      <>
+                        <ShieldAlert size={13} className="text-rose-400" />
+                        <span>{scanResult.statusLabel || "Flagged Claims / Hash Discrepancy"}</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShieldCheck size={13} className="text-emerald-400" />
+                        <span>Authentic Candidate</span>
+                      </>
+                    )}
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">
@@ -1404,27 +1498,40 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
               <p className="text-[10px] text-slate-500">Cross-verified with EPFO service records</p>
             </div>
 
-            <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-3.5 space-y-1">
+            <div className={`rounded-xl p-3.5 space-y-1 border ${
+              scanResult.isWrongCert 
+                ? "bg-rose-950/30 border-rose-800/80" 
+                : "bg-slate-800/40 border-slate-800"
+            }`}>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-400 font-semibold">Certificate Hash</span>
-                {scanResult.isSuspicious ? (
+                {scanResult.isWrongCert ? (
                   <XCircle size={15} className="text-rose-400" />
                 ) : (
                   <CheckCircle2 size={15} className="text-emerald-400" />
                 )}
               </div>
-              <p className={`text-xs font-bold ${scanResult.isSuspicious ? "text-rose-300" : "text-emerald-300"}`}>
+              <p className={`text-xs font-bold ${scanResult.isWrongCert ? "text-rose-400 font-extrabold" : "text-emerald-300"}`}>
                 {scanResult.certHashStatus}
               </p>
-              <p className="text-[10px] text-slate-500 font-mono">{scanResult.certHash}</p>
+              <p className="text-[10px] text-slate-500 font-mono truncate">{scanResult.certHash}</p>
+              {scanResult.isWrongCert && (
+                <p className="text-[10px] text-rose-300 font-medium">⚠️ Checksum Failed: Mismatch with Registry</p>
+              )}
             </div>
 
             <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-3.5 space-y-1">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-400 font-semibold">Degree Validation</span>
-                <CheckCircle2 size={15} className="text-emerald-400" />
+                {scanResult.isWrongCert ? (
+                  <AlertTriangle size={15} className="text-amber-400" />
+                ) : (
+                  <CheckCircle2 size={15} className="text-emerald-400" />
+                )}
               </div>
-              <p className="text-xs font-bold text-emerald-300">{scanResult.educationStatus}</p>
+              <p className={`text-xs font-bold ${scanResult.isWrongCert ? "text-amber-300" : "text-emerald-300"}`}>
+                {scanResult.educationStatus}
+              </p>
               <p className="text-[10px] text-slate-500">Verified via National Academic Depository</p>
             </div>
           </div>
