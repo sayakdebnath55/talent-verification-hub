@@ -563,6 +563,133 @@ const INITIAL_CANDIDATES = [
 
     fraudFlags: [],
   },
+
+  {
+    id: "SIH-2024-007",
+    name: "Dhiraj Vaidya",
+    avatar: "DV",
+    avatarBg: "from-blue-600 via-indigo-600 to-violet-700",
+    role: "Lead Data Scientist & ML Architect",
+    status: "verified",
+    trustScore: 97,
+    trustLabel: "Gold Standard Verified",
+    appliedDate: "Oct 24, 2024",
+    location: "Pune, Maharashtra",
+
+    education: {
+      degree: "B.Tech in Artificial Intelligence & Data Science",
+      college: "COEP Technological University, Pune",
+      year: "2021",
+      cgpa: "9.3 / 10",
+      verified: true,
+      verificationSource: "DigiLocker & National Academic Depository Verified",
+    },
+
+    experienceTotal: "3.5 Years Total",
+    experienceTimeline: [
+      {
+        company: "Persistent Systems",
+        role: "Senior Data Scientist",
+        duration: "2.0 Years (2022 – Present)",
+        verified: true,
+        source: "EPFO UAN & Corporate Domain Verified",
+      },
+      {
+        company: "Cognizant AI Labs",
+        role: "Data Analyst & ML Associate",
+        duration: "1.5 Years (2021 – 2022)",
+        verified: true,
+        source: "EPFO UAN Records Verified",
+      },
+    ],
+
+    socialFootprint: {
+      linkedin: {
+        url: "linkedin.com/in/dhiraj-vaidya-ds",
+        status: "Top Voice • 3,400+ followers",
+        verified: true,
+      },
+      github: {
+        username: "dhiraj-vaidya",
+        repos: 54,
+        commits: 1820,
+        verified: true,
+      },
+      portfolio: {
+        url: "https://dhirajvaidya.dev",
+        status: "Live ML Models & Research Portfolio",
+        verified: true,
+      },
+    },
+
+    certificates: [
+      {
+        id: "CERT-DV-001",
+        title: "Advanced Data Analytics & Predictive Insights",
+        issuer: "Google Cloud & Coursera",
+        issueDate: "Aug 2023",
+        serialHash: "0x7A4F89D201B456C1",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
+      },
+      {
+        id: "CERT-DV-002",
+        title: "Machine Learning & Predictive Modeling Specialization",
+        issuer: "Stanford Online / DeepLearning.AI",
+        issueDate: "Mar 2023",
+        serialHash: "0x33A7B9915522AA10",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: Stanford Online Credential Registry",
+      },
+      {
+        id: "CERT-DV-003",
+        title: "DeepLearning.AI TensorFlow Developer Professional",
+        issuer: "DeepLearning.AI",
+        issueDate: "Nov 2022",
+        serialHash: "0x66B2C884990033FF",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: DeepLearning.AI Official Registry",
+      },
+      {
+        id: "CERT-DV-004",
+        title: "Advanced Python Programming for Data Science",
+        issuer: "IBM Skills Network",
+        issueDate: "Jan 2023",
+        serialHash: "0x11C9D443881266B0",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: IBM Credential Network Confirmed",
+      },
+      {
+        id: "CERT-DV-005",
+        title: "AWS Certified Machine Learning – Specialty",
+        issuer: "Amazon Web Services (AWS)",
+        issueDate: "Feb 2024",
+        serialHash: "0x88F1AA99BB3344EE",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: AWS Digital Credential Registry",
+      },
+      {
+        id: "CERT-DV-006",
+        title: "Tableau Business Intelligence & Data Visualization Master",
+        issuer: "Tableau / Salesforce",
+        issueDate: "May 2022",
+        serialHash: "0x44D39902FF118742",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: Tableau Partner Network Confirmed",
+      },
+      {
+        id: "CERT-DV-007",
+        title: "Smart India Hackathon Finalist Credential",
+        issuer: "Smart India Hackathon (SIH 2024)",
+        issueDate: "Oct 2024",
+        serialHash: "0xSIH2024E10177A8",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+      },
+    ],
+
+    fraudFlags: [],
+  },
 ];
 
 // =============================================================================
@@ -892,227 +1019,265 @@ function CertificateModal({ candidate, onClose, onUpdateCertificate }) {
 // =============================================================================
 
 // Helper: Dynamically maps credentials based on candidate profile, role, and custom uploaded file
-function generateProfileCertificates({ candidateName, appliedRole, certHash, uploadedFile, isWrongCert }) {
-  const nameLower = candidateName.toLowerCase();
-  const roleLower = appliedRole.toLowerCase();
+function generateProfileCertificates({ candidateName, appliedRole, certHash, uploadedFile, isWrongCert, candidates = [] }) {
+  const nameLower = candidateName.toLowerCase().trim();
+  const roleLower = appliedRole.toLowerCase().trim();
 
-  // 1. Determine Primary Certificate
-  let primaryTitle = `${appliedRole} Professional Certification`;
-  let primaryIssuer = "Global Credential Authority";
-  let primaryDocNote = null;
+  // 1. Look up candidate in active candidates list (e.g. "Dhiraj Vaidya", "Rahul Sharma", etc.)
+  const matchedCandidate = candidates.find(
+    (c) =>
+      c.name.toLowerCase().includes(nameLower) ||
+      (nameLower.length > 2 && nameLower.includes(c.name.toLowerCase()))
+  );
 
+  let certs = [];
+
+  if (matchedCandidate && Array.isArray(matchedCandidate.certificates) && matchedCandidate.certificates.length > 0) {
+    // Read and clone the candidate's actual credentials directly from profile
+    certs = matchedCandidate.certificates.map((cert, idx) => ({
+      ...cert,
+      verified: isWrongCert && idx === 0 ? false : cert.verified,
+      verificationTimestamp: isWrongCert && idx === 0
+        ? "Tampered Hash: Serial Key not found in Issuer Registry"
+        : cert.verificationTimestamp,
+    }));
+  } else {
+    // Contextual fallback credentials tailored to role (at least 6-7 credentials)
+    if (
+      nameLower.includes("dhiraj") ||
+      roleLower.includes("data") ||
+      roleLower.includes("analytics") ||
+      roleLower.includes("machine learning") ||
+      roleLower.includes("ml") ||
+      roleLower.includes("ai")
+    ) {
+      certs = [
+        {
+          id: "CERT-DV-001",
+          title: "Advanced Data Analytics & Predictive Insights",
+          issuer: "Google Cloud & Coursera",
+          issueDate: "Aug 2023",
+          serialHash: certHash.trim() || "0x7A4F89D201B456C1",
+          verified: !isWrongCert,
+          verificationTimestamp: isWrongCert
+            ? "Tampered Hash: Serial Key not found in Issuer Registry"
+            : "Verified on Ledger: Coursera Credential API Authenticated",
+        },
+        {
+          id: "CERT-DV-002",
+          title: "Machine Learning & Predictive Modeling Specialization",
+          issuer: "Stanford Online / DeepLearning.AI",
+          issueDate: "Mar 2023",
+          serialHash: "0x33A7B9915522AA10",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Stanford Online Credential Registry",
+        },
+        {
+          id: "CERT-DV-003",
+          title: "DeepLearning.AI TensorFlow Developer Professional",
+          issuer: "DeepLearning.AI",
+          issueDate: "Nov 2022",
+          serialHash: "0x66B2C884990033FF",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: DeepLearning.AI Official Registry",
+        },
+        {
+          id: "CERT-DV-004",
+          title: "Advanced Python Programming for Data Science",
+          issuer: "IBM Skills Network",
+          issueDate: "Jan 2023",
+          serialHash: "0x11C9D443881266B0",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: IBM Credential Network Confirmed",
+        },
+        {
+          id: "CERT-DV-005",
+          title: "AWS Certified Machine Learning – Specialty",
+          issuer: "Amazon Web Services (AWS)",
+          issueDate: "Feb 2024",
+          serialHash: "0x88F1AA99BB3344EE",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: AWS Digital Credential Registry",
+        },
+        {
+          id: "CERT-DV-006",
+          title: "Tableau Business Intelligence & Data Visualization Master",
+          issuer: "Tableau / Salesforce",
+          issueDate: "May 2022",
+          serialHash: "0x44D39902FF118742",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Tableau Partner Network Confirmed",
+        },
+        {
+          id: "CERT-DV-007",
+          title: "Smart India Hackathon Finalist Credential",
+          issuer: "Smart India Hackathon (SIH 2024)",
+          issueDate: "Oct 2024",
+          serialHash: "0xSIH2024E10177A8",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+        },
+      ];
+    } else if (
+      roleLower.includes("frontend") ||
+      roleLower.includes("web") ||
+      roleLower.includes("react") ||
+      roleLower.includes("full stack")
+    ) {
+      certs = [
+        {
+          id: "CERT-FS-001",
+          title: "Full Stack Web Development Professional Certificate",
+          issuer: "IBM Skills Network",
+          issueDate: "Jun 2023",
+          serialHash: certHash.trim() || "0x98A172BC55D40192",
+          verified: !isWrongCert,
+          verificationTimestamp: isWrongCert
+            ? "Tampered Hash: Serial Key not found in Issuer Registry"
+            : "Verified on Ledger: IBM Skills Network Registry Confirmed",
+        },
+        {
+          id: "CERT-META-3301",
+          title: "Meta Full-Stack & React Developer Specialization",
+          issuer: "Meta / Coursera",
+          issueDate: "Jul 2022",
+          serialHash: "0xB4C9E10177A8293D",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Meta Certification Registry Confirmed",
+        },
+        {
+          id: "CERT-WEB-5502",
+          title: "Advanced Web Architecture & Core Web Vitals",
+          issuer: "Google Developers",
+          issueDate: "Mar 2023",
+          serialHash: "0x55E211D899AC4401",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Google Developers Certification Authority",
+        },
+        {
+          id: "CERT-NODE-004",
+          title: "Node.js Enterprise Application Architecture",
+          issuer: "OpenJS Foundation",
+          issueDate: "Sep 2022",
+          serialHash: "0x7711BC3300AA44F1",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: OpenJS Registry Authenticated",
+        },
+        {
+          id: "CERT-TS-005",
+          title: "TypeScript Enterprise Design Patterns",
+          issuer: "Microsoft Learn",
+          issueDate: "Jan 2024",
+          serialHash: "0x66B819AC77221190",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Microsoft Certification Ledger Verified",
+        },
+        {
+          id: "CERT-SIH-2024",
+          title: "Smart India Hackathon Finalist Credential",
+          issuer: "Smart India Hackathon (SIH 2024)",
+          issueDate: "Oct 2024",
+          serialHash: "0xSIH2024E10177A8",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+        },
+      ];
+    } else {
+      certs = [
+        {
+          id: "CERT-PRI-GEN",
+          title: `${appliedRole || "Software Engineering"} Professional Certification`,
+          issuer: "Global Credential Authority",
+          issueDate: "Sep 2023",
+          serialHash: certHash.trim() || "0x77A19902FF118833",
+          verified: !isWrongCert,
+          verificationTimestamp: isWrongCert
+            ? "Tampered Hash: Serial Key not found in Issuer Registry"
+            : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
+        },
+        {
+          id: "CERT-PY-4402",
+          title: "Advanced Python Programming",
+          issuer: "Coursera / DeepLearning.AI",
+          issueDate: "Aug 2022",
+          serialHash: "0x7A4F89D201B456C1",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
+        },
+        {
+          id: "CERT-AWS-9912",
+          title: "Cloud & AWS Fundamentals",
+          issuer: "AWS Training",
+          issueDate: "Mar 2023",
+          serialHash: "0x88F1AA99BB3344EE",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: AWS Digital Badge Confirmed",
+        },
+        {
+          id: "CERT-DOCKER-004",
+          title: "Containerization & Docker Certified Associate",
+          issuer: "Docker Inc / Mirantis",
+          issueDate: "Nov 2022",
+          serialHash: "0x44D1289AC770119B",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Docker Official Credential Registry",
+        },
+        {
+          id: "CERT-AGILE-005",
+          title: "Professional Scrum Master (PSM I)",
+          issuer: "Scrum.org",
+          issueDate: "Feb 2023",
+          serialHash: "0x1188BBAA55667700",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Scrum.org Global Database Confirmed",
+        },
+        {
+          id: "CERT-SIH-2024",
+          title: "Smart India Hackathon Finalist Credential",
+          issuer: "Smart India Hackathon (SIH 2024)",
+          issueDate: "Oct 2024",
+          serialHash: "0xSIH2024E10177A8",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+        },
+      ];
+    }
+  }
+
+  // 2. If a custom document was uploaded (e.g., certificate (1).pdf),
+  // set its cleaned name as the #1 Primary Certificate
   if (uploadedFile && uploadedFile.name) {
-    // If user uploaded a custom file, derive the title directly from the document name
     const cleanTitle = uploadedFile.name
       .replace(/\.(pdf|png|jpg|jpeg|docx)$/i, "")
       .replace(/[_-]+/g, " ")
-      .trim();
-
-    primaryTitle = cleanTitle
+      .trim()
       .split(" ")
+      .filter(Boolean)
       .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
       .join(" ");
 
-    primaryIssuer = "Verified Document Issuer";
-    primaryDocNote = uploadedFile.name;
-  } else if (nameLower.includes("dhiraj") || roleLower.includes("data") || roleLower.includes("analytics")) {
-    primaryTitle = "Advanced Data Analytics & Predictive Insights";
-    primaryIssuer = "Google Cloud & Coursera";
+    const primaryUploadedCert = {
+      id: `CERT-DOC-${Math.floor(1000 + Math.random() * 9000)}`,
+      title: cleanTitle || "Verified Document Credential",
+      issuer: "Verified Document Issuer",
+      issueDate: "Oct 2024",
+      serialHash: certHash.trim() || "0x7A4F89D201B456C1",
+      verified: !isWrongCert,
+      documentNote: uploadedFile.name,
+      verificationTimestamp: isWrongCert
+        ? "Tampered Hash: Serial Key not found in Issuer Registry"
+        : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
+    };
+
+    // Replace the first item with the custom uploaded document so it sits as #1 Primary Certificate,
+    // while keeping all 6+ remaining credentials belonging to the candidate
+    certs = [primaryUploadedCert, ...certs.slice(1)];
   }
 
-  const primaryCert = {
-    id: `CERT-PRI-${Math.floor(1000 + Math.random() * 9000)}`,
-    title: primaryTitle,
-    issuer: primaryIssuer,
-    issueDate: "Sep 2023",
-    serialHash: certHash.trim() || "0x77A19902FF118833",
-    verified: !isWrongCert,
-    documentNote: primaryDocNote,
-    verificationTimestamp: isWrongCert
-      ? "Tampered Hash: Serial Key not found in Issuer Registry"
-      : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
-  };
-
-  // 2. Generate remaining 3 contextual credentials mapped to candidate name / role
-  let secondaryCerts = [];
-
-  // Special match for Dhiraj Vaidya or Data Science / AI / ML profiles
-  if (
-    nameLower.includes("dhiraj") ||
-    roleLower.includes("data") ||
-    roleLower.includes("analytics") ||
-    roleLower.includes("machine learning") ||
-    roleLower.includes("ml") ||
-    roleLower.includes("ai")
-  ) {
-    secondaryCerts = [
-      {
-        id: "CERT-ML-8810",
-        title: "Machine Learning & Predictive Modeling Specialization",
-        issuer: "Stanford Online / DeepLearning.AI",
-        issueDate: "Aug 2023",
-        serialHash: "0x33A7B9915522AA10",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Stanford Online Credential Registry",
-      },
-      {
-        id: "CERT-PY-4402",
-        title: "Advanced Python Programming for Data Science",
-        issuer: "Coursera / IBM Skills Network",
-        issueDate: "Jan 2023",
-        serialHash: "0x7A4F89D201B456C1",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
-      },
-      {
-        id: "CERT-SIH-2024",
-        title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
-        serialHash: "0xSIH2024E10177A8",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-      },
-    ];
-  } else if (
-    roleLower.includes("frontend") ||
-    roleLower.includes("web") ||
-    roleLower.includes("react") ||
-    roleLower.includes("full stack")
-  ) {
-    secondaryCerts = [
-      {
-        id: "CERT-META-3301",
-        title: "Meta Full-Stack & React Developer Specialization",
-        issuer: "Meta / Coursera",
-        issueDate: "Jul 2022",
-        serialHash: "0xB4C9E10177A8293D",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Meta Certification Registry Confirmed",
-      },
-      {
-        id: "CERT-WEB-5502",
-        title: "Advanced Web Architecture & Core Web Vitals",
-        issuer: "Google Developers",
-        issueDate: "Mar 2023",
-        serialHash: "0x55E211D899AC4401",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Google Developers Certification Authority",
-      },
-      {
-        id: "CERT-SIH-2024",
-        title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
-        serialHash: "0xSIH2024E10177A8",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-      },
-    ];
-  } else if (
-    roleLower.includes("devops") ||
-    roleLower.includes("cloud") ||
-    roleLower.includes("aws")
-  ) {
-    secondaryCerts = [
-      {
-        id: "CERT-AWS-6612",
-        title: "AWS Certified Solutions Architect – Associate",
-        issuer: "Amazon Web Services (AWS)",
-        issueDate: "Mar 2023",
-        serialHash: "0x88F166C412E9903B",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: AWS Training Digital Badge Confirmed",
-      },
-      {
-        id: "CERT-CKA-3301",
-        title: "Certified Kubernetes Administrator (CKA)",
-        issuer: "CNCF / Linux Foundation",
-        issueDate: "Jun 2023",
-        serialHash: "0x99B3F441882200DE",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Linux Foundation Credential API Authenticated",
-      },
-      {
-        id: "CERT-SIH-2024",
-        title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
-        serialHash: "0xSIH2024E10177A8",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-      },
-    ];
-  } else if (
-    roleLower.includes("security") ||
-    roleLower.includes("cyber")
-  ) {
-    secondaryCerts = [
-      {
-        id: "CERT-COMP-8812",
-        title: "CompTIA Security+ Certification",
-        issuer: "CompTIA",
-        issueDate: "Feb 2023",
-        serialHash: "0x8821AA190033BC88",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: CompTIA Registry Confirmed",
-      },
-      {
-        id: "CERT-CEH-5501",
-        title: "Certified Ethical Hacker (CEH v12)",
-        issuer: "EC-Council",
-        issueDate: "Nov 2022",
-        serialHash: "0xAA992211FF445500",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: EC-Council Global Registry Verified",
-      },
-      {
-        id: "CERT-SIH-2024",
-        title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
-        serialHash: "0xSIH2024E10177A8",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-      },
-    ];
-  } else {
-    // Default robust credentials tailored around the candidate's input
-    secondaryCerts = [
-      {
-        id: "CERT-PY-4402",
-        title: "Advanced Python Programming",
-        issuer: "Coursera / DeepLearning.AI",
-        issueDate: "Aug 2022",
-        serialHash: "0x7A4F89D201B456C1",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
-      },
-      {
-        id: "CERT-AWS-9912",
-        title: "Cloud & AWS Fundamentals",
-        issuer: "AWS Training",
-        issueDate: "Mar 2023",
-        serialHash: "0x88F1AA99BB3344EE",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: AWS Digital Badge Confirmed",
-      },
-      {
-        id: "CERT-SIH-2024",
-        title: "Smart India Hackathon Finalist Credential",
-        issuer: "Smart India Hackathon (SIH 2024)",
-        issueDate: "Oct 2024",
-        serialHash: "0xSIH2024E10177A8",
-        verified: true,
-        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-      },
-    ];
-  }
-
-  return [primaryCert, ...secondaryCerts];
+  return certs;
 }
 
-function LiveAuthenticatorTool({ onAddCandidate }) {
+function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
   // Input form state
   const [candidateName, setCandidateName] = useState("");
   const [profileUrl, setProfileUrl] = useState("");
@@ -1208,7 +1373,18 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
 
   // Quick Preset Handlers
   const handleLoadPreset = (type) => {
-    if (type === "flagged") {
+    if (type === "dhiraj") {
+      setCandidateName("Dhiraj Vaidya");
+      setProfileUrl("https://linkedin.com/in/dhiraj-vaidya-ds");
+      setCertHash("0x7A4F89D201B456C1");
+      setAppliedRole("Lead Data Scientist & ML Architect");
+      setUploadedFile({
+        name: "certificate (1).pdf",
+        size: "520 KB",
+        type: "application/pdf",
+      });
+      setSimulateInvalidCert(false);
+    } else if (type === "flagged") {
       setCandidateName("Siddharth Mehra");
       setProfileUrl("https://linkedin.com/in/siddharth-mehra-dev");
       setCertHash("0xDEAD5500AA99BEEF");
@@ -1305,13 +1481,14 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
         );
       }
 
-      // Dynamically generate the candidate's 4 certificates based on name, role, and custom uploaded document
+      // Dynamically generate the candidate's certificates based on profile, name, role, and custom uploaded document
       const candidateCerts = generateProfileCertificates({
         candidateName: candidateName.trim(),
         appliedRole: appliedRole.trim(),
         certHash: certHash.trim() || "0x77A19902FF118833",
         uploadedFile,
         isWrongCert,
+        candidates,
       });
 
       setScanResult({
@@ -1352,7 +1529,7 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
       setScanning(false);
       setScanStep(0);
     }, 2600);
-  }, [candidateName, profileUrl, certHash, appliedRole, uploadedFile, simulateInvalidCert]);
+  }, [candidateName, profileUrl, certHash, appliedRole, uploadedFile, simulateInvalidCert, candidates]);
 
   // Push scanned candidate into directory state
   const handlePushToDirectory = () => {
@@ -1448,6 +1625,12 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
           {/* Quick Presets */}
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-[11px] text-slate-500 font-semibold">Test Presets:</span>
+            <button
+              onClick={() => handleLoadPreset("dhiraj")}
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-blue-950/70 text-blue-300 border border-blue-800/70 hover:bg-blue-900/80 transition-colors flex items-center gap-1 font-semibold"
+            >
+              <span>🎓</span> Dhiraj Vaidya (7 Certs)
+            </button>
             <button
               onClick={() => handleLoadPreset("flagged")}
               className="text-xs px-2.5 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 border border-rose-800/60 hover:bg-rose-900/80 transition-colors"
@@ -1811,19 +1994,19 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
               <span className="text-[10px] text-slate-400 uppercase font-semibold">Total Certificates</span>
               <p className="text-xl font-bold text-white mt-0.5">
-                {scanResult.certificates?.length || 4} Credentials
+                {scanResult.certificates?.length || 0} Credentials
               </p>
             </div>
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
               <span className="text-[10px] text-slate-400 uppercase font-semibold">Verified on Ledger</span>
               <p className="text-xl font-bold text-emerald-400 mt-0.5">
-                {scanResult.certificates?.filter((c) => c.verified).length ?? (scanResult.isWrongCert ? 3 : 4)} Authentic
+                {scanResult.certificates?.filter((c) => c.verified).length ?? 0} Authentic
               </p>
             </div>
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
               <span className="text-[10px] text-slate-400 uppercase font-semibold">Discrepancy / Tamper Flags</span>
               <p className={`text-xl font-bold mt-0.5 ${scanResult.isWrongCert ? "text-rose-400" : "text-slate-400"}`}>
-                {scanResult.certificates?.filter((c) => !c.verified).length ?? (scanResult.isWrongCert ? 1 : 0)} Detected
+                {scanResult.certificates?.filter((c) => !c.verified).length ?? 0} Detected
               </p>
             </div>
           </div>
@@ -1833,14 +2016,14 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
             <div className="flex items-center justify-between">
               <h4 className="text-xs text-slate-300 font-bold uppercase tracking-wider flex items-center gap-2">
                 <Award size={15} className="text-indigo-400" />
-                Earned Certifications & Cryptographic Hashes ({scanResult.certificates?.length || 4})
+                Earned Certifications & Cryptographic Hashes ({scanResult.certificates?.length || 0})
               </h4>
               <span className="text-[10px] text-indigo-400 font-mono bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/60">
                 Ledger Vault Synchronized
               </span>
             </div>
 
-            <div className="space-y-3">
+            <div className="max-h-[480px] overflow-y-auto pr-2 custom-scrollbar space-y-3">
               {scanResult.certificates?.map((cert) => (
                 <div
                   key={cert.id}
@@ -2451,7 +2634,7 @@ export default function App() {
             onViewCertificates={(cand) => setSelectedCandidate(cand)}
           />
         ) : (
-          <LiveAuthenticatorTool onAddCandidate={handleAddCandidate} />
+          <LiveAuthenticatorTool candidates={candidates} onAddCandidate={handleAddCandidate} />
         )}
       </main>
 
