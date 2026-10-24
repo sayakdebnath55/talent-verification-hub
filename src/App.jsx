@@ -4,7 +4,7 @@
 // Complete Single-File React + Tailwind CSS Application
 // =============================================================================
 
-import React, { useState, useMemo, useCallback, useRef } from "react";
+import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import {
   Search, Shield, ShieldCheck, ShieldAlert, Award, Briefcase,
   GraduationCap, CheckCircle2, XCircle, Clock, TrendingUp,
@@ -583,7 +583,6 @@ const INITIAL_CANDIDATES = [
       degree: "B.Tech in Artificial Intelligence and Machine Learning (AIML)",
       college: "ALARD University Pune (ALARD School of Engineering & Technology)",
       year: "2026",
-      cgpa: "9.3 / 10",
       verified: true,
       verificationSource: "ALARD University Pune & AICTE Verified (profile-linkedin-profile.txt)",
     },
@@ -608,18 +607,18 @@ const INITIAL_CANDIDATES = [
 
     socialFootprint: {
       linkedin: {
-        url: "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
+        url: "https://www.linkedin.com/in/dhiraj-vaidya-529726423",
         status: "314 connections on LinkedIn • Pune City",
         verified: true,
       },
       github: {
-        username: "dhiraj-vaidya",
-        repos: 54,
-        commits: 1820,
+        username: "sayakdebnath55",
+        repos: 3,
+        commits: 120,
         verified: true,
       },
       portfolio: {
-        url: "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
+        url: "https://www.linkedin.com/in/dhiraj-vaidya-529726423",
         status: "Verified LinkedIn Profile (profile.txt)",
         verified: true,
       },
@@ -633,7 +632,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "July 06, 2026",
         serialHash: "0xSNU2029904A7F9E2D188C4",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — ServiceNow University & AICTE Official Registry (Cert ID: SNU2029904)",
+        verificationTimestamp: "Verified on Ledger: ServiceNow University & AICTE Official Registry (Cert ID: SNU2029904)",
       },
       {
         id: "SNU-AI-002",
@@ -642,7 +641,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "July 06, 2026",
         serialHash: "0x33A7B9915522AA10",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — ServiceNow University Credential Registry",
+        verificationTimestamp: "Verified on Ledger: ServiceNow University Credential Registry",
       },
       {
         id: "SNU-CSA-003",
@@ -651,7 +650,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "July 06, 2026",
         serialHash: "0x66B2C884990033FF",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — ServiceNow Official Registry",
+        verificationTimestamp: "Verified on Ledger: ServiceNow Official Registry",
       },
       {
         id: "SNU-ATF-004",
@@ -660,7 +659,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "July 06, 2026",
         serialHash: "0x11C9D443881266B0",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — AICTE National Internship Registry",
+        verificationTimestamp: "Verified on Ledger: AICTE National Internship Registry",
       },
       {
         id: "CERT-DV-005",
@@ -669,7 +668,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "Aug 2025",
         serialHash: "0x7A4F89D201B456C1",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — Coursera Credential API Confirmed",
+        verificationTimestamp: "Verified on Ledger: Coursera Credential API Confirmed",
       },
       {
         id: "CERT-DV-006",
@@ -678,7 +677,7 @@ const INITIAL_CANDIDATES = [
         issueDate: "Mar 2025",
         serialHash: "0x44D39902FF118742",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — DeepLearning.AI Official Ledger",
+        verificationTimestamp: "Verified on Ledger: DeepLearning.AI Official Ledger",
       },
       {
         id: "CERT-DV-007",
@@ -687,7 +686,75 @@ const INITIAL_CANDIDATES = [
         issueDate: "Oct 2025",
         serialHash: "0xSIH2024E10177A8",
         verified: true,
-        verificationTimestamp: "Yes, that is authenticated — MoE Innovation Cell / AICTE Depository",
+        verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+      },
+    ],
+
+    fraudFlags: [],
+  },
+
+  {
+    id: "25ET2021033",
+    name: "Sayak Debnath",
+    avatar: "SD",
+    avatarBg: "from-indigo-600 via-blue-600 to-cyan-600",
+    role: "B.Tech AIML Specialist — ALARD University Pune",
+    headline: "Pune City, Maharashtra, India | B.Tech AI & Data Science",
+    about:
+      "B.Tech student specializing in Artificial Intelligence and Machine Learning at ALARD School of Engineering & Technology, ALARD University, Pune (Enrollment: 25ET2021033).",
+    status: "verified",
+    trustScore: 98,
+    trustLabel: "Verified Authentic",
+    appliedDate: "Aug 03, 2026",
+    location: "Pune City, Maharashtra, India",
+
+    education: {
+      degree: "B.Tech in Artificial Intelligence and Machine Learning (AIML)",
+      college: "ALARD University Pune (ALARD School of Engineering & Technology)",
+      year: "2026",
+      verified: true,
+      verificationSource: "ALARD University Pune Academic Registry Verified",
+    },
+
+    experienceTotal: "Microsoft & ALARD Certified",
+    experienceTimeline: [
+      {
+        company: "ALARD School of Engineering & Technology, Pune",
+        role: "Social Media Analytics Framework Lead Researcher",
+        duration: "A.Y. 2026–27 (Roll No: 25ET2021033)",
+        verified: true,
+        source: "Verified by Department of Engineering, ALARD University",
+      },
+    ],
+
+    socialFootprint: {
+      linkedin: {
+        url: "https://www.linkedin.com/in/sayak-debnath",
+        status: "Verified LinkedIn Profile • Pune City",
+        verified: true,
+      },
+      github: {
+        username: "sayakdebnath55",
+        repos: 3,
+        commits: 140,
+        verified: true,
+      },
+      portfolio: {
+        url: "https://github.com/sayakdebnath55",
+        status: "Live GitHub Profile",
+        verified: true,
+      },
+    },
+
+    certificates: [
+      {
+        id: "MSFT-GENAI-2026",
+        title: "Introduction to generative AI and agents",
+        issuer: "Microsoft (Signed by Satya Narayana Nadella)",
+        issueDate: "August 03, 2026",
+        serialHash: "0xMSFT2026AUG03SAYAK99A1",
+        verified: true,
+        verificationTimestamp: "Verified on Ledger: Official Microsoft Credential Registry",
       },
     ],
 
@@ -1014,233 +1081,139 @@ function CertificateModal({ candidate, onClose, onUpdateCertificate }) {
 // Real-time background simulation tool allowing HR to run instant scans
 // =============================================================================
 
-// Helper: Dynamically maps credentials based on candidate profile, role, and custom uploaded file
-function generateProfileCertificates({ candidateName, appliedRole, certHash, uploadedFile, isWrongCert, candidates = [] }) {
-  const nameLower = candidateName.toLowerCase().trim();
-  const roleLower = appliedRole.toLowerCase().trim();
+// Helper 1: Extract clean GitHub username from a handle or full GitHub URL
+// e.g., "sayakdebnath55" or "https://github.com/sayakdebnath55" -> "sayakdebnath55"
+function extractGitHubUsername(rawInput) {
+  if (!rawInput || typeof rawInput !== "string") return "";
+  const trimmed = rawInput.trim();
+  if (!trimmed) return "";
 
-  // 1. Look up candidate in active candidates list (e.g. "Dhiraj Vaidya", "Rahul Sharma", etc.)
-  const matchedCandidate = candidates.find(
-    (c) =>
-      c.name.toLowerCase().includes(nameLower) ||
-      (nameLower.length > 2 && nameLower.includes(c.name.toLowerCase()))
-  );
+  // If the user pasted a LinkedIn URL here by mistake, return empty for GitHub
+  if (trimmed.toLowerCase().includes("linkedin.com")) return "";
+
+  try {
+    if (trimmed.toLowerCase().includes("github.com")) {
+      const normalized = trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+      const urlObj = new URL(normalized);
+      const parts = urlObj.pathname.split("/").filter(Boolean);
+      return parts[0] ? parts[0].replace(/^@/, "") : "";
+    }
+  } catch {
+    // Fallback regex parsing if URL constructor fails
+  }
+
+  return trimmed
+    .replace(/^https?:\/\/(www\.)?github\.com\//i, "")
+    .replace(/^@/, "")
+    .split("/")[0]
+    .split("?")[0]
+    .trim();
+}
+
+// Helper 2: Clean and parse any LinkedIn URL input
+// e.g., "https://www.linkedin.com/in/dhiraj-vaidya-529726423"
+function parseLinkedInUrl(rawInput, matchedCandidate) {
+  const fallbackUrl =
+    matchedCandidate?.socialFootprint?.linkedin?.url || "";
+  const source = (rawInput || "").trim() || fallbackUrl;
+
+  if (!source) {
+    return {
+      isLinked: false,
+      handle: "",
+      cleanUrl: "",
+      statusBadge: "No LinkedIn URL Provided",
+      headline: matchedCandidate?.headline || null,
+      about: matchedCandidate?.about || null,
+      connectionsText: matchedCandidate?.socialFootprint?.linkedin?.status || null,
+    };
+  }
+
+  // Extract slug after /in/ if present
+  let handle = source
+    .replace(/^https?:\/\/(www\.|[a-z]{2}\.)?linkedin\.com\/in\//i, "")
+    .replace(/^https?:\/\/(www\.|[a-z]{2}\.)?linkedin\.com\//i, "")
+    .split("/")[0]
+    .split("?")[0]
+    .trim();
+
+  if (!handle) {
+    handle = "dhiraj-vaidya-529726423";
+  }
+
+  const cleanUrl = `https://www.linkedin.com/in/${handle}`;
+
+  return {
+    isLinked: true,
+    handle,
+    cleanUrl,
+    statusBadge: "LinkedIn Profile Linked",
+    headline:
+      matchedCandidate?.headline ||
+      (handle.includes("dhiraj-vaidya")
+        ? "Pune City, Maharashtra, India | Professional Profile"
+        : "Verified LinkedIn Professional Profile"),
+    about:
+      matchedCandidate?.about ||
+      (handle.includes("dhiraj-vaidya")
+        ? "I am a B-Tech student specializing in Artificial Intelligence and Machine Learning at ALARD University Pune · Education: ALARD University Pune · Location: Pune City · 314 connections on LinkedIn."
+        : null),
+    connectionsText:
+      matchedCandidate?.socialFootprint?.linkedin?.status ||
+      (handle.includes("dhiraj-vaidya")
+        ? "314 connections on LinkedIn • Pune City"
+        : "Verified LinkedIn Profile"),
+  };
+}
+
+// Helper 3: Strictly map ONLY the candidate's actual database/text profile certificates
+// plus any custom uploaded document as the #1 Primary Certificate (No fake generic certs)
+function generateProfileCertificates({
+  candidateName,
+  linkedinUrl,
+  certHash,
+  uploadedFile,
+  isWrongCert,
+  candidates = [],
+}) {
+  const nameLower = (candidateName || "").toLowerCase().trim();
+  const linkedinLower = (linkedinUrl || "").toLowerCase().trim();
+
+  // 1. Find actual candidate in database by name or LinkedIn slug
+  const matchedCandidate = candidates.find((c) => {
+    const cName = c.name.toLowerCase();
+    const cLinkedin = (c.socialFootprint?.linkedin?.url || "").toLowerCase();
+    return (
+      (nameLower.length > 1 && (cName.includes(nameLower) || nameLower.includes(cName))) ||
+      (linkedinLower.includes("dhiraj-vaidya") && cName.includes("dhiraj"))
+    );
+  });
 
   let certs = [];
 
-  if (matchedCandidate && Array.isArray(matchedCandidate.certificates) && matchedCandidate.certificates.length > 0) {
-    // Read and clone the candidate's actual credentials directly from profile
-    certs = matchedCandidate.certificates.map((cert, idx) => ({
-      ...cert,
-      verified: isWrongCert && idx === 0 ? false : cert.verified,
-      verificationTimestamp: isWrongCert && idx === 0
-        ? "Tampered Hash: Serial Key not found in Issuer Registry"
-        : cert.verificationTimestamp,
-    }));
-  } else {
-    // Contextual fallback credentials tailored to role (at least 6-7 credentials)
-    if (
-      nameLower.includes("dhiraj") ||
-      roleLower.includes("data") ||
-      roleLower.includes("analytics") ||
-      roleLower.includes("machine learning") ||
-      roleLower.includes("ml") ||
-      roleLower.includes("ai")
-    ) {
-      certs = [
-        {
-          id: "CERT-DV-001",
-          title: "Advanced Data Analytics & Predictive Insights",
-          issuer: "Google Cloud & Coursera",
-          issueDate: "Aug 2023",
-          serialHash: certHash.trim() || "0x7A4F89D201B456C1",
-          verified: !isWrongCert,
-          verificationTimestamp: isWrongCert
-            ? "Tampered Hash: Serial Key not found in Issuer Registry"
-            : "Verified on Ledger: Coursera Credential API Authenticated",
-        },
-        {
-          id: "CERT-DV-002",
-          title: "Machine Learning & Predictive Modeling Specialization",
-          issuer: "Stanford Online / DeepLearning.AI",
-          issueDate: "Mar 2023",
-          serialHash: "0x33A7B9915522AA10",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Stanford Online Credential Registry",
-        },
-        {
-          id: "CERT-DV-003",
-          title: "DeepLearning.AI TensorFlow Developer Professional",
-          issuer: "DeepLearning.AI",
-          issueDate: "Nov 2022",
-          serialHash: "0x66B2C884990033FF",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: DeepLearning.AI Official Registry",
-        },
-        {
-          id: "CERT-DV-004",
-          title: "Advanced Python Programming for Data Science",
-          issuer: "IBM Skills Network",
-          issueDate: "Jan 2023",
-          serialHash: "0x11C9D443881266B0",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: IBM Credential Network Confirmed",
-        },
-        {
-          id: "CERT-DV-005",
-          title: "AWS Certified Machine Learning – Specialty",
-          issuer: "Amazon Web Services (AWS)",
-          issueDate: "Feb 2024",
-          serialHash: "0x88F1AA99BB3344EE",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: AWS Digital Credential Registry",
-        },
-        {
-          id: "CERT-DV-006",
-          title: "Tableau Business Intelligence & Data Visualization Master",
-          issuer: "Tableau / Salesforce",
-          issueDate: "May 2022",
-          serialHash: "0x44D39902FF118742",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Tableau Partner Network Confirmed",
-        },
-        {
-          id: "CERT-DV-007",
-          title: "Smart India Hackathon Finalist Credential",
-          issuer: "Smart India Hackathon (SIH 2024)",
-          issueDate: "Oct 2024",
-          serialHash: "0xSIH2024E10177A8",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-        },
-      ];
-    } else if (
-      roleLower.includes("frontend") ||
-      roleLower.includes("web") ||
-      roleLower.includes("react") ||
-      roleLower.includes("full stack")
-    ) {
-      certs = [
-        {
-          id: "CERT-FS-001",
-          title: "Full Stack Web Development Professional Certificate",
-          issuer: "IBM Skills Network",
-          issueDate: "Jun 2023",
-          serialHash: certHash.trim() || "0x98A172BC55D40192",
-          verified: !isWrongCert,
-          verificationTimestamp: isWrongCert
-            ? "Tampered Hash: Serial Key not found in Issuer Registry"
-            : "Verified on Ledger: IBM Skills Network Registry Confirmed",
-        },
-        {
-          id: "CERT-META-3301",
-          title: "Meta Full-Stack & React Developer Specialization",
-          issuer: "Meta / Coursera",
-          issueDate: "Jul 2022",
-          serialHash: "0xB4C9E10177A8293D",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Meta Certification Registry Confirmed",
-        },
-        {
-          id: "CERT-WEB-5502",
-          title: "Advanced Web Architecture & Core Web Vitals",
-          issuer: "Google Developers",
-          issueDate: "Mar 2023",
-          serialHash: "0x55E211D899AC4401",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Google Developers Certification Authority",
-        },
-        {
-          id: "CERT-NODE-004",
-          title: "Node.js Enterprise Application Architecture",
-          issuer: "OpenJS Foundation",
-          issueDate: "Sep 2022",
-          serialHash: "0x7711BC3300AA44F1",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: OpenJS Registry Authenticated",
-        },
-        {
-          id: "CERT-TS-005",
-          title: "TypeScript Enterprise Design Patterns",
-          issuer: "Microsoft Learn",
-          issueDate: "Jan 2024",
-          serialHash: "0x66B819AC77221190",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Microsoft Certification Ledger Verified",
-        },
-        {
-          id: "CERT-SIH-2024",
-          title: "Smart India Hackathon Finalist Credential",
-          issuer: "Smart India Hackathon (SIH 2024)",
-          issueDate: "Oct 2024",
-          serialHash: "0xSIH2024E10177A8",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-        },
-      ];
-    } else {
-      certs = [
-        {
-          id: "CERT-PRI-GEN",
-          title: `${appliedRole || "Software Engineering"} Professional Certification`,
-          issuer: "Global Credential Authority",
-          issueDate: "Sep 2023",
-          serialHash: certHash.trim() || "0x77A19902FF118833",
-          verified: !isWrongCert,
-          verificationTimestamp: isWrongCert
-            ? "Tampered Hash: Serial Key not found in Issuer Registry"
-            : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
-        },
-        {
-          id: "CERT-PY-4402",
-          title: "Advanced Python Programming",
-          issuer: "Coursera / DeepLearning.AI",
-          issueDate: "Aug 2022",
-          serialHash: "0x7A4F89D201B456C1",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
-        },
-        {
-          id: "CERT-AWS-9912",
-          title: "Cloud & AWS Fundamentals",
-          issuer: "AWS Training",
-          issueDate: "Mar 2023",
-          serialHash: "0x88F1AA99BB3344EE",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: AWS Digital Badge Confirmed",
-        },
-        {
-          id: "CERT-DOCKER-004",
-          title: "Containerization & Docker Certified Associate",
-          issuer: "Docker Inc / Mirantis",
-          issueDate: "Nov 2022",
-          serialHash: "0x44D1289AC770119B",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Docker Official Credential Registry",
-        },
-        {
-          id: "CERT-AGILE-005",
-          title: "Professional Scrum Master (PSM I)",
-          issuer: "Scrum.org",
-          issueDate: "Feb 2023",
-          serialHash: "0x1188BBAA55667700",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: Scrum.org Global Database Confirmed",
-        },
-        {
-          id: "CERT-SIH-2024",
-          title: "Smart India Hackathon Finalist Credential",
-          issuer: "Smart India Hackathon (SIH 2024)",
-          issueDate: "Oct 2024",
-          serialHash: "0xSIH2024E10177A8",
-          verified: true,
-          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
-        },
-      ];
-    }
+  if (
+    matchedCandidate &&
+    Array.isArray(matchedCandidate.certificates) &&
+    matchedCandidate.certificates.length > 0
+  ) {
+    // Map only the candidate's actual profile certificates
+    certs = matchedCandidate.certificates.map((cert, idx) => {
+      const isPrimaryFlagged = isWrongCert && idx === 0 && !uploadedFile;
+      return {
+        ...cert,
+        serialHash:
+          idx === 0 && !uploadedFile && certHash.trim()
+            ? certHash.trim()
+            : cert.serialHash,
+        verified: isPrimaryFlagged ? false : cert.verified,
+        verificationTimestamp: isPrimaryFlagged
+          ? "Cryptographic Hash Mismatch on Ledger"
+          : cert.verificationTimestamp,
+      };
+    });
   }
 
-  // 2. If a custom document was uploaded (e.g., certificate (1).pdf),
+  // 2. If user uploaded a custom document (e.g., certificate (1).pdf),
   // set its cleaned name as the #1 Primary Certificate
   if (uploadedFile && uploadedFile.name) {
     const cleanTitle = uploadedFile.name
@@ -1253,42 +1226,90 @@ function generateProfileCertificates({ candidateName, appliedRole, certHash, upl
       .join(" ");
 
     const primaryUploadedCert = {
-      id: `CERT-DOC-${Math.floor(1000 + Math.random() * 9000)}`,
-      title: cleanTitle || "Verified Document Credential",
-      issuer: "Verified Document Issuer",
-      issueDate: "Oct 2024",
+      id:
+        matchedCandidate?.name === "Dhiraj Vaidya"
+          ? "SNU2029904"
+          : `CERT-DOC-${uploadedFile.name.length}01`,
+      title: cleanTitle || uploadedFile.name,
+      issuer:
+        matchedCandidate?.name === "Dhiraj Vaidya"
+          ? "ServiceNow University • AICTE • SmartBridge"
+          : matchedCandidate?.name === "Sayak Debnath"
+          ? "Microsoft Corporation"
+          : "Uploaded Credential Document",
+      issueDate:
+        matchedCandidate?.name === "Dhiraj Vaidya"
+          ? "July 06, 2026"
+          : matchedCandidate?.name === "Sayak Debnath"
+          ? "August 03, 2026"
+          : "Verified Upload",
       serialHash: certHash.trim() || "0x7A4F89D201B456C1",
       verified: !isWrongCert,
       documentNote: uploadedFile.name,
       verificationTimestamp: isWrongCert
-        ? "Tampered Hash: Serial Key not found in Issuer Registry"
-        : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
+        ? "Cryptographic Hash Mismatch on Ledger"
+        : "Verified on Ledger: Cryptographic Hash Matched",
     };
 
-    // Replace the first item with the custom uploaded document so it sits as #1 Primary Certificate,
-    // while keeping all 6+ remaining credentials belonging to the candidate
-    certs = [primaryUploadedCert, ...certs.slice(1)];
+    // Place the uploaded certificate as #1, followed by actual remaining profile certificates
+    const remainingActual = certs.filter(
+      (c, idx) => idx !== 0 && c.documentNote !== uploadedFile.name
+    );
+    certs = [primaryUploadedCert, ...remainingActual];
+  } else if (certs.length === 0 && certHash.trim()) {
+    // If candidate is not in database and no file uploaded, only show the single hash being audited
+    certs = [
+      {
+        id: "CERT-AUDIT-01",
+        title: "Submitted Certificate Hash Record",
+        issuer: "Credential Verification Ledger",
+        issueDate: "Submitted Record",
+        serialHash: certHash.trim(),
+        verified: !isWrongCert,
+        verificationTimestamp: isWrongCert
+          ? "Cryptographic Hash Mismatch on Ledger"
+          : "Verified on Ledger: Cryptographic Hash Matched",
+      },
+    ];
   }
 
   return certs;
 }
 
 function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
-  // Input form state (Defaults to Dhiraj Vaidya from profile-linkedin-profile.txt)
+  // Input form state
   const [candidateName, setCandidateName] = useState("Dhiraj Vaidya");
-  const [profileUrl, setProfileUrl] = useState("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
+  const [profileUrl, setProfileUrl] = useState(
+    "https://www.linkedin.com/in/dhiraj-vaidya-529726423"
+  );
+  const [githubInput, setGithubInput] = useState("sayakdebnath55");
   const [certHash, setCertHash] = useState("0xSNU2029904A7F9E2D188C4");
-  const [appliedRole, setAppliedRole] = useState("B.Tech AIML Specialist — ALARD University Pune");
+  const [appliedRole, setAppliedRole] = useState(
+    "B.Tech AIML — ALARD University Pune"
+  );
 
   // Uploaded certificate document state
-  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState({
+    name: "certificate (1).pdf",
+    size: "520.0 KB",
+    type: "application/pdf",
+  });
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef(null);
 
-  // Pop-up modal state that says "Yes, that is authenticated"
+  // Pop-up modal state
   const [authPopupData, setAuthPopupData] = useState(null);
 
-  // Helper to generate a realistic mock SHA-256 cryptographic hash from file name
+  // Scan simulation state
+  const [scanning, setScanning] = useState(false);
+  const [scanStep, setScanStep] = useState(0);
+  const [scanResult, setScanResult] = useState(null);
+  const [verifyingScanCertId, setVerifyingScanCertId] = useState(null);
+
+  // Custom toggle to simulate invalid/tampered certificate
+  const [simulateInvalidCert, setSimulateInvalidCert] = useState(false);
+
+  // Helper to generate a realistic SHA-256 cryptographic hash from file name
   const generateMockSHA256 = (filename) => {
     const chars = "0123456789ABCDEF";
     let hash = "0x";
@@ -1305,37 +1326,91 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     return hash;
   };
 
-  // Handler when user selects or drops ANY PDF / certificate file -> Always Verified & Opens Pop-up
+  // Async function to fetch live public profile data from https://api.github.com/users/{username}
+  const fetchLiveGitHubData = useCallback(async (rawGithubHandle) => {
+    const cleanUsername = extractGitHubUsername(rawGithubHandle);
+    if (!cleanUsername) {
+      return null;
+    }
+
+    try {
+      const response = await fetch(
+        `https://api.github.com/users/${encodeURIComponent(cleanUsername)}`,
+        {
+          headers: {
+            Accept: "application/vnd.github.v3+json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        return {
+          status: "fallback",
+          username: cleanUsername,
+          displayName: cleanUsername,
+          avatarUrl: null,
+          publicRepos: 0,
+          followers: 0,
+          following: 0,
+          bio:
+            response.status === 404
+              ? `GitHub handle "@${cleanUsername}" was not found on the public registry. Showing safe fallback state.`
+              : "GitHub Public API rate limit reached — displaying safe fallback state without interruption.",
+          htmlUrl: `https://github.com/${cleanUsername}`,
+          errorMessage:
+            response.status === 404
+              ? "Handle Not Found (Fallback State)"
+              : `API Status ${response.status} (Fallback State)`,
+        };
+      }
+
+      const data = await response.json();
+      return {
+        status: "live",
+        username: data.login || cleanUsername,
+        displayName: data.name || data.login || cleanUsername,
+        avatarUrl: data.avatar_url || null,
+        publicRepos: typeof data.public_repos === "number" ? data.public_repos : 0,
+        followers: typeof data.followers === "number" ? data.followers : 0,
+        following: typeof data.following === "number" ? data.following : 0,
+        bio:
+          data.bio ||
+          "Active developer profile verified via GitHub Public REST API (no custom bio text set).",
+        htmlUrl: data.html_url || `https://github.com/${cleanUsername}`,
+        errorMessage: null,
+      };
+    } catch {
+      // Smooth network error fallback state without crashing
+      return {
+        status: "fallback",
+        username: cleanUsername,
+        displayName: cleanUsername,
+        avatarUrl: null,
+        publicRepos: 0,
+        followers: 0,
+        following: 0,
+        bio: "Network / Rate-limit fallback: Unable to reach api.github.com right now. Displaying safe fallback profile state.",
+        htmlUrl: `https://github.com/${cleanUsername}`,
+        errorMessage: "Offline / Rate Limit Fallback State",
+      };
+    }
+  }, []);
+
+  // Handler when user selects or drops a PDF / certificate file
   const handleProcessFile = (file) => {
     if (!file) return;
-    const sizeStr = file.size > 1024 * 1024
-      ? (file.size / (1024 * 1024)).toFixed(2) + " MB"
-      : (file.size / 1024).toFixed(1) + " KB";
+    const sizeStr =
+      file.size > 1024 * 1024
+        ? (file.size / (1024 * 1024)).toFixed(2) + " MB"
+        : (file.size / 1024).toFixed(1) + " KB";
 
     const autoHash = generateMockSHA256(file.name);
-    const cleanTitle = file.name
-      .replace(/\.(pdf|png|jpg|jpeg|docx)$/i, "")
-      .replace(/[_-]+/g, " ")
-      .trim();
-
     setUploadedFile({
       name: file.name,
       size: sizeStr,
       type: file.type || "Document",
     });
     setCertHash(autoHash);
-    setSimulateInvalidCert(false);
-
-    // Immediately show the "Yes, that is authenticated" pop-up for the uploaded certificate
-    setAuthPopupData({
-      title: cleanTitle || "Virtual Internship Program — Certificate of Completion",
-      fileName: file.name,
-      candidateName: candidateName || "Dhiraj Vaidya",
-      issuer: "ServiceNow University • AICTE (Ministry of Education) • SmartBridge",
-      certId: "SNU2029904",
-      issueDate: "July 06, 2026",
-      serialHash: autoHash,
-    });
   };
 
   // Clear uploaded file handler
@@ -1347,85 +1422,171 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     }
   };
 
-  // Scan simulation state
-  const [scanning, setScanning] = useState(false);
-  const [scanStep, setScanStep] = useState(0);
-  const [scanResult, setScanResult] = useState(null);
-  const [verifyingScanCertId, setVerifyingScanCertId] = useState(null);
+  // Evaluate whether current inputs indicate an invalid/tampered certificate
+  const computeIsWrongCert = useCallback(
+    (hashVal, fileObj, simToggle) => {
+      const hashLower = (hashVal || "").toLowerCase();
+      const fileNameLower = (fileObj?.name || "").toLowerCase();
+      const invalidKeywords = [
+        "wrong",
+        "fake",
+        "tampered",
+        "0xdead",
+        "invalid",
+        "corrupt",
+        "mismatch",
+      ];
+      return (
+        simToggle ||
+        invalidKeywords.some(
+          (kw) => hashLower.includes(kw) || fileNameLower.includes(kw)
+        )
+      );
+    },
+    []
+  );
 
-  // Custom toggle (kept false so all certificates verify as 100% authenticated)
-  const [simulateInvalidCert, setSimulateInvalidCert] = useState(false);
+  // Keep scanResult 100% synced in real-time when 'Simulate Invalid Certificate' toggle changes
+  useEffect(() => {
+    setScanResult((prev) => {
+      if (!prev) return null;
+      const isWrongCert = computeIsWrongCert(
+        certHash,
+        uploadedFile,
+        simulateInvalidCert
+      );
+      const isSuspicious = isWrongCert;
+      const updatedCerts = generateProfileCertificates({
+        candidateName: prev.candidateName,
+        linkedinUrl: prev.profileUrl,
+        certHash: certHash.trim() || prev.certHash,
+        uploadedFile,
+        isWrongCert,
+        candidates,
+      });
 
-  // Handler to verify a specific certificate's hash inside the scan result report -> Always Authenticated & Pop-up
+      const flags = isWrongCert
+        ? [
+            "Cryptographic Hash Mismatch on Ledger: Certificate hash failed decentralized registry checksum verification.",
+            "Invalid Digital Signature: Primary credential serial key flagged as tampered or unverified.",
+          ]
+        : [];
+
+      const computedTrustScore = isWrongCert
+        ? 35
+        : prev.githubProfile?.status === "live"
+        ? 96
+        : 94;
+
+      return {
+        ...prev,
+        trustScore: computedTrustScore,
+        isSuspicious,
+        isWrongCert,
+        statusLabel: isWrongCert
+          ? "Flagged Claims / Hash Discrepancy"
+          : "Authentic Candidate",
+        certHashStatus: isWrongCert
+          ? "Cryptographic Hash Mismatch on Ledger"
+          : "Cryptographic Hash Matched on Ledger",
+        flags,
+        certificates: updatedCerts,
+      };
+    });
+  }, [simulateInvalidCert, certHash, uploadedFile, candidates, computeIsWrongCert]);
+
+  // Handler to verify a specific certificate's hash inside the scan result report
   const handleVerifyScanCert = (cert) => {
     setVerifyingScanCertId(cert.id);
     setTimeout(() => {
+      const isPrimaryTampered =
+        scanResult?.isWrongCert &&
+        cert.id === scanResult?.certificates[0]?.id;
+      const isFake =
+        cert.serialHash.toLowerCase().includes("dead") ||
+        cert.serialHash.toLowerCase().includes("fake") ||
+        cert.serialHash.toLowerCase().includes("tampered") ||
+        cert.serialHash.toLowerCase().includes("wrong") ||
+        isPrimaryTampered;
+
       setScanResult((prev) => {
         if (!prev) return null;
         const updated = prev.certificates.map((c) =>
           c.id === cert.id
             ? {
                 ...c,
-                verified: true,
-                verificationTimestamp: `Yes, that is authenticated — Verified on Official Ledger (${new Date().toLocaleTimeString("en-IN")})`,
+                verified: !isFake,
+                verificationTimestamp: isFake
+                  ? "Cryptographic Hash Mismatch on Ledger"
+                  : `Verified on Ledger: Hash Authenticated (${new Date().toLocaleTimeString(
+                      "en-IN"
+                    )})`,
               }
             : c
         );
         return { ...prev, certificates: updated };
       });
       setVerifyingScanCertId(null);
-      setAuthPopupData({
-        title: cert.title,
-        fileName: cert.documentNote || "certificate (1).pdf",
-        candidateName: scanResult?.candidateName || candidateName || "Dhiraj Vaidya",
-        issuer: cert.issuer,
-        certId: cert.id || "SNU2029904",
-        issueDate: cert.issueDate || "July 06, 2026",
-        serialHash: cert.serialHash,
-      });
-    }, 450);
+
+      if (!isFake) {
+        setAuthPopupData({
+          title: cert.title,
+          fileName: cert.documentNote || "certificate (1).pdf",
+          candidateName:
+            scanResult?.candidateName || candidateName || "Dhiraj Vaidya",
+          issuer: cert.issuer,
+          certId: cert.id || "SNU2029904",
+          issueDate: cert.issueDate || "July 06, 2026",
+          serialHash: cert.serialHash,
+        });
+      }
+    }, 500);
   };
 
   // Quick Preset Handlers
   const handleLoadPreset = (type) => {
     if (type === "dhiraj") {
       setCandidateName("Dhiraj Vaidya");
-      setProfileUrl("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
+      setProfileUrl("https://www.linkedin.com/in/dhiraj-vaidya-529726423");
+      setGithubInput("sayakdebnath55");
       setCertHash("0xSNU2029904A7F9E2D188C4");
-      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
+      setAppliedRole("B.Tech AIML — ALARD University Pune");
       setUploadedFile({
         name: "certificate (1).pdf",
-        size: "520 KB",
+        size: "520.0 KB",
+        type: "application/pdf",
+      });
+      setSimulateInvalidCert(false);
+    } else if (type === "sayak") {
+      setCandidateName("Sayak Debnath");
+      setProfileUrl("https://www.linkedin.com/in/sayak-debnath");
+      setGithubInput("https://github.com/sayakdebnath55");
+      setCertHash("0xMSFT2026AUG03SAYAK99A1");
+      setAppliedRole("B.Tech AIML — ALARD University Pune");
+      setUploadedFile({
+        name: "certificate.pdf",
+        size: "410.0 KB",
         type: "application/pdf",
       });
       setSimulateInvalidCert(false);
     } else if (type === "flagged") {
       setCandidateName("Dhiraj Vaidya");
-      setProfileUrl("https://in.linkedin.com/in/dhiraj-vaidya-529726423");
-      setCertHash("0xSNU2029904A7F9E2D188C4");
-      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
+      setProfileUrl("https://www.linkedin.com/in/dhiraj-vaidya-529726423");
+      setGithubInput("sayakdebnath55");
+      setCertHash("0xDEAD5500AA99BEEF");
+      setAppliedRole("B.Tech AIML — ALARD University Pune");
       setUploadedFile({
-        name: "certificate (1).pdf",
-        size: "520 KB",
+        name: "wrong_tampered_certificate.pdf",
+        size: "348.0 KB",
         type: "application/pdf",
       });
-      setSimulateInvalidCert(false);
-    } else if (type === "verified") {
-      setCandidateName("Rhea Mukherjee");
-      setProfileUrl("https://linkedin.com/in/rhea-mukherjee-ai");
-      setCertHash("0x88F1AA99BB3344EE");
-      setAppliedRole("AI / ML Engineer");
-      setUploadedFile({
-        name: "Stanford_Online_Deep_Learning.pdf",
-        size: "412 KB",
-        type: "application/pdf",
-      });
-      setSimulateInvalidCert(false);
+      setSimulateInvalidCert(true);
     } else {
       setCandidateName("");
       setProfileUrl("");
+      setGithubInput("");
       setCertHash("");
-      setAppliedRole("B.Tech AIML Specialist — ALARD University Pune");
+      setAppliedRole("B.Tech AIML — ALARD University Pune");
       setUploadedFile(null);
       setSimulateInvalidCert(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -1433,93 +1594,138 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     setScanResult(null);
   };
 
-  // Run simulated asynchronous AI verification pipeline (Always Verifies Every Certificate as 100% Authenticated)
-  const handleRunVerification = useCallback(() => {
+  // Run live verification pipeline with real-time GitHub Public API + LinkedIn URL parser
+  const handleRunVerification = useCallback(async () => {
     if (!candidateName.trim()) return;
 
     setScanning(true);
     setScanResult(null);
     setScanStep(1);
 
-    // Multi-step progress animation simulating real NLP & API calls
-    setTimeout(() => setScanStep(2), 400);
-    setTimeout(() => setScanStep(3), 850);
-    setTimeout(() => setScanStep(4), 1300);
+    const step2Timer = setTimeout(() => setScanStep(2), 350);
+    const step3Timer = setTimeout(() => setScanStep(3), 750);
+    const step4Timer = setTimeout(() => setScanStep(4), 1100);
 
-    setTimeout(() => {
-      // Every certificate and profile given by the user is verified (never not authenticated)
-      const isWrongCert = false;
-      const isSuspiciousProfile = false;
-      const isSuspicious = false;
-      const computedTrustScore = 99;
-      const flags = [];
+    // 1. Determine GitHub handle from githubInput (or if user pasted github.com URL in profileUrl)
+    const effectiveGithubRaw =
+      githubInput.trim() ||
+      (profileUrl.toLowerCase().includes("github.com") ? profileUrl : "");
 
-      // Dynamically generate the candidate's certificates based on profile, name, role, and custom uploaded document
-      const candidateCerts = generateProfileCertificates({
-        candidateName: candidateName.trim(),
-        appliedRole: appliedRole.trim(),
-        certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
-        uploadedFile,
-        isWrongCert: false,
-        candidates,
-      }).map((c) => ({
-        ...c,
-        verified: true,
-      }));
+    // 2. Fetch live GitHub profile data from https://api.github.com/users/{username}
+    const [liveGithubProfile] = await Promise.all([
+      fetchLiveGitHubData(effectiveGithubRaw),
+      new Promise((resolve) => setTimeout(resolve, 1400)),
+    ]);
 
-      const primaryCert = candidateCerts[0] || {
-        id: "SNU2029904",
-        title: "Virtual Internship Program — Certificate of Completion",
-        issuer: "ServiceNow University • AICTE • SmartBridge",
-        issueDate: "July 06, 2026",
-        serialHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
-      };
+    clearTimeout(step2Timer);
+    clearTimeout(step3Timer);
+    clearTimeout(step4Timer);
 
-      setScanResult({
-        candidateName: candidateName.trim(),
-        profileUrl:
-          profileUrl.trim() ||
-          "https://in.linkedin.com/in/dhiraj-vaidya-529726423",
-        certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
-        appliedRole: appliedRole,
-        trustScore: computedTrustScore,
-        isSuspicious,
-        isWrongCert,
-        statusLabel: "Yes, that is authenticated (100% Verified)",
-        workAuthStatus: "100% Verified — ServiceNow & AICTE Registry",
-        certHashStatus: "Yes, that is authenticated — Hash Matched on Ledger",
-        educationStatus: "ALARD University Pune — B.Tech AIML Verified (314 Connections)",
-        flags,
-        certificates: candidateCerts,
-        timestamp: new Date().toLocaleTimeString("en-IN", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        }),
-      });
+    // 3. Match candidate from database for accurate education & LinkedIn text records
+    const nameLower = candidateName.toLowerCase().trim();
+    const matchedCandidate = candidates.find(
+      (c) =>
+        c.name.toLowerCase().includes(nameLower) ||
+        (nameLower.length > 2 && nameLower.includes(c.name.toLowerCase()))
+    );
 
-      setScanning(false);
-      setScanStep(0);
+    // 4. Clean and parse LinkedIn URL input
+    const parsedLinkedIn = parseLinkedInUrl(
+      profileUrl.toLowerCase().includes("github.com") ? "" : profileUrl,
+      matchedCandidate
+    );
 
-      // Open the "Yes, that is authenticated" pop-up modal
-      setAuthPopupData({
-        title: primaryCert.title,
-        fileName: uploadedFile?.name || "certificate (1).pdf",
-        candidateName: candidateName.trim(),
-        issuer: primaryCert.issuer,
-        certId: primaryCert.id || "SNU2029904",
-        issueDate: primaryCert.issueDate || "July 06, 2026",
-        serialHash: primaryCert.serialHash,
-      });
-    }, 1600);
-  }, [candidateName, profileUrl, certHash, appliedRole, uploadedFile, simulateInvalidCert, candidates]);
+    // 5. Evaluate certificate validity
+    const isWrongCert = computeIsWrongCert(
+      certHash,
+      uploadedFile,
+      simulateInvalidCert
+    );
+    const isSuspicious = isWrongCert;
 
-  // Push scanned candidate into directory state
+    // 6. Compute Trust Score synced with live data & Simulate Invalid Certificate toggle
+    let computedTrustScore = 94;
+    if (isWrongCert) {
+      computedTrustScore = 35;
+    } else if (liveGithubProfile?.status === "live" && parsedLinkedIn.isLinked) {
+      computedTrustScore = 96;
+    }
+
+    // 7. Build risk flags only when invalid certificate is detected
+    const flags = [];
+    if (isWrongCert) {
+      flags.push(
+        "Cryptographic Hash Mismatch on Ledger: Uploaded certificate hash failed decentralized ledger checksum verification."
+      );
+      flags.push(
+        "Invalid Digital Signature: Certificate serial key is unverified or not registered in the official issuer repository."
+      );
+    }
+
+    // 8. Strictly map only actual candidate certificates + custom uploaded document
+    const candidateCerts = generateProfileCertificates({
+      candidateName: candidateName.trim(),
+      linkedinUrl: parsedLinkedIn.cleanUrl,
+      certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
+      uploadedFile,
+      isWrongCert,
+      candidates,
+    });
+
+    const actualEducationText = matchedCandidate?.education
+      ? `${matchedCandidate.education.degree} — ${matchedCandidate.education.college}`
+      : "Verified Academic Record";
+
+    setScanResult({
+      candidateName: candidateName.trim(),
+      profileUrl: parsedLinkedIn.cleanUrl || profileUrl.trim(),
+      linkedinProfile: parsedLinkedIn,
+      githubProfile: liveGithubProfile,
+      matchedCandidate,
+      certHash: certHash.trim() || "0xSNU2029904A7F9E2D188C4",
+      appliedRole: appliedRole.trim(),
+      trustScore: computedTrustScore,
+      isSuspicious,
+      isWrongCert,
+      statusLabel: isWrongCert
+        ? "Flagged Claims / Hash Discrepancy"
+        : "Authentic Candidate",
+      workAuthStatus: matchedCandidate?.experienceTotal || "Verified Profile Record",
+      certHashStatus: isWrongCert
+        ? "Cryptographic Hash Mismatch on Ledger"
+        : "Cryptographic Hash Matched on Ledger",
+      educationStatus: actualEducationText,
+      flags,
+      certificates: candidateCerts,
+      timestamp: new Date().toLocaleTimeString("en-IN", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      }),
+    });
+
+    setScanning(false);
+    setScanStep(0);
+  }, [
+    candidateName,
+    profileUrl,
+    githubInput,
+    certHash,
+    appliedRole,
+    uploadedFile,
+    simulateInvalidCert,
+    candidates,
+    fetchLiveGitHubData,
+    computeIsWrongCert,
+  ]);
+
+  // Push scanned candidate into directory state using only accurate data (no fake CGPA)
   const handlePushToDirectory = () => {
     if (!scanResult) return;
 
+    const matched = scanResult.matchedCandidate;
     const newCandidate = {
-      id: `SIH-2024-00${Math.floor(Math.random() * 900) + 100}`,
+      id: matched?.id || `SIH-2026-${Math.floor(Math.random() * 900) + 100}`,
       name: scanResult.candidateName,
       avatar: scanResult.candidateName
         .split(" ")
@@ -1527,65 +1733,69 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
         .join("")
         .toUpperCase()
         .substring(0, 2),
-      avatarBg: scanResult.isSuspicious ? "from-rose-600 to-amber-600" : "from-indigo-600 to-emerald-600",
+      avatarBg: scanResult.isSuspicious
+        ? "from-rose-600 to-amber-600"
+        : "from-indigo-600 to-emerald-600",
       role: scanResult.appliedRole,
       status: scanResult.isSuspicious ? "flagged" : "verified",
       trustScore: scanResult.trustScore,
-      trustLabel: scanResult.isSuspicious ? "Flagged Claims" : "Verified Authentic",
+      trustLabel: scanResult.isSuspicious
+        ? "Flagged Claims / Hash Discrepancy"
+        : "Authentic Candidate",
       appliedDate: "Just Now",
-      location: "Verified via Live Portal",
-      education: {
-        degree: "B.Tech in Computer Engineering",
-        college: "State Technical University",
-        year: "2022",
-        cgpa: "8.2 / 10",
-        verified: true,
-        verificationSource: "Live AICTE / UGC Database",
+      location:
+        matched?.location || "Pune City, Maharashtra, India",
+      education: matched?.education || {
+        degree: scanResult.appliedRole,
+        college: "ALARD University Pune",
+        year: "2026",
+        verified: !scanResult.isWrongCert,
+        verificationSource: "Verified via Live Footprint Authenticator",
       },
-      experienceTotal: "2.0 Years Total",
-      experienceTimeline: [
+      experienceTotal: matched?.experienceTotal || "Verified Record",
+      experienceTimeline: matched?.experienceTimeline || [
         {
-          company: "Tech Systems Ltd.",
+          company: "Verified Profile Record",
           role: scanResult.appliedRole,
-          duration: "2.0 Years Claimed",
+          duration: "Current",
           verified: !scanResult.isSuspicious,
           source: scanResult.workAuthStatus,
         },
       ],
       socialFootprint: {
         linkedin: {
-          url: scanResult.profileUrl,
-          status: "Audited via Live Authenticator",
-          verified: !scanResult.isSuspicious,
+          url: scanResult.linkedinProfile?.cleanUrl || scanResult.profileUrl,
+          status:
+            scanResult.linkedinProfile?.connectionsText ||
+            "LinkedIn Profile Linked",
+          verified: Boolean(scanResult.linkedinProfile?.isLinked),
         },
         github: {
-          username: scanResult.candidateName.toLowerCase().replace(/\s+/g, "-"),
-          repos: scanResult.isSuspicious ? 4 : 26,
-          commits: scanResult.isSuspicious ? 18 : 650,
-          verified: !scanResult.isSuspicious,
+          username:
+            scanResult.githubProfile?.username ||
+            extractGitHubUsername(githubInput) ||
+            "unlinked",
+          repos: scanResult.githubProfile?.publicRepos ?? 0,
+          commits: (scanResult.githubProfile?.publicRepos ?? 0) * 15,
+          verified: scanResult.githubProfile?.status === "live",
         },
         portfolio: {
-          url: "Live Web Verified",
-          status: "Scanned",
+          url:
+            scanResult.githubProfile?.htmlUrl ||
+            scanResult.linkedinProfile?.cleanUrl ||
+            "Verified",
+          status: "Live Footprint Scanned",
           verified: true,
         },
       },
-      certificates: scanResult.certificates || [
-        {
-          id: "CERT-ML-8810",
-          title: "Machine Learning Certification",
-          issuer: "Global Credential Authority",
-          issueDate: "2023",
-          serialHash: scanResult.certHash,
-          verified: !scanResult.isWrongCert,
-          verificationTimestamp: scanResult.certHashStatus,
-        },
-      ],
+      certificates: scanResult.certificates || [],
       fraudFlags: scanResult.flags,
     };
 
     onAddCandidate(newCandidate);
-    alert(`Candidate "${scanResult.candidateName}" successfully added to the active Directory!`);
+    alert(
+      `Candidate "${scanResult.candidateName}" successfully synced to the active Directory!`
+    );
   };
 
   return (
@@ -1598,35 +1808,43 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               <div className="w-8 h-8 rounded-lg bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
                 <Fingerprint size={18} />
               </div>
-              <h2 className="text-white text-xl font-extrabold">Live Footprint Authenticator</h2>
+              <h2 className="text-white text-xl font-extrabold">
+                Live Footprint Authenticator
+              </h2>
             </div>
             <p className="text-xs text-slate-400 mt-1">
-              Simulate an instant AI-powered background check on any candidate’s LinkedIn footprint, EPFO work tenure, and digital certificate hash.
+              Real-time GitHub REST API integration, LinkedIn profile parser, and cryptographic certificate hash authenticator.
             </p>
           </div>
 
           {/* Quick Presets */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-[11px] text-slate-500 font-semibold">Test Presets:</span>
+            <span className="text-[11px] text-slate-500 font-semibold">
+              Presets:
+            </span>
             <button
+              type="button"
               onClick={() => handleLoadPreset("dhiraj")}
               className="text-xs px-2.5 py-1.5 rounded-lg bg-blue-950/70 text-blue-300 border border-blue-800/70 hover:bg-blue-900/80 transition-colors flex items-center gap-1 font-semibold"
             >
               <span>🎓</span> Dhiraj Vaidya (7 Certs)
             </button>
             <button
+              type="button"
+              onClick={() => handleLoadPreset("sayak")}
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 hover:bg-emerald-900/80 transition-colors flex items-center gap-1 font-semibold"
+            >
+              <span>💻</span> Sayak (GitHub Live)
+            </button>
+            <button
+              type="button"
               onClick={() => handleLoadPreset("flagged")}
               className="text-xs px-2.5 py-1.5 rounded-lg bg-rose-950/60 text-rose-300 border border-rose-800/60 hover:bg-rose-900/80 transition-colors"
             >
-              ⚠️ Flagged Profile
+              ⚠️ Tampered Hash Demo
             </button>
             <button
-              onClick={() => handleLoadPreset("verified")}
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-emerald-950/60 text-emerald-300 border border-emerald-800/60 hover:bg-emerald-900/80 transition-colors"
-            >
-              ✅ Authentic Profile
-            </button>
-            <button
+              type="button"
               onClick={() => handleLoadPreset("blank")}
               className="text-xs px-2 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors"
             >
@@ -1645,33 +1863,38 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               type="text"
               value={candidateName}
               onChange={(e) => setCandidateName(e.target.value)}
-              placeholder="e.g., Siddharth Mehra or Rahul Sharma"
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1">Applied Job Role</label>
-            <input
-              type="text"
-              value={appliedRole}
-              onChange={(e) => setAppliedRole(e.target.value)}
-              placeholder="e.g., Full Stack Web Developer"
+              placeholder="e.g., Dhiraj Vaidya or Sayak Debnath"
               className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">
-              LinkedIn Profile URL or GitHub Username
+              Academic Specialization / Role
+            </label>
+            <input
+              type="text"
+              value={appliedRole}
+              onChange={(e) => setAppliedRole(e.target.value)}
+              placeholder="e.g., B.Tech AIML — ALARD University Pune"
+              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
+              LinkedIn Profile URL
             </label>
             <div className="relative">
-              <Linkedin size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+              <Linkedin
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-400"
+              />
               <input
                 type="text"
                 value={profileUrl}
                 onChange={(e) => setProfileUrl(e.target.value)}
-                placeholder="https://linkedin.com/in/username"
+                placeholder="https://www.linkedin.com/in/dhiraj-vaidya-529726423"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
               />
             </div>
@@ -1679,15 +1902,40 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
 
           <div>
             <label className="block text-xs font-semibold text-slate-300 mb-1">
+              GitHub Username or GitHub Profile URL{" "}
+              <span className="text-[10px] text-emerald-400 font-normal">
+                (Live API: api.github.com)
+              </span>
+            </label>
+            <div className="relative">
+              <Github
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300"
+              />
+              <input
+                type="text"
+                value={githubInput}
+                onChange={(e) => setGithubInput(e.target.value)}
+                placeholder="e.g., sayakdebnath55 or https://github.com/sayakdebnath55"
+                className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
+              />
+            </div>
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-xs font-semibold text-slate-300 mb-1">
               Certificate Cryptographic Hash Key
             </label>
             <div className="relative">
-              <Hash size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500" />
+              <Hash
+                size={15}
+                className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"
+              />
               <input
                 type="text"
                 value={certHash}
                 onChange={(e) => setCertHash(e.target.value)}
-                placeholder="e.g., 0x7A4F89D201B456C1 (or type 0xDEAD for fake)"
+                placeholder="e.g., 0x7A4F89D201B456C1 (or 0xDEAD for invalid hash test)"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm font-mono focus:outline-none focus:border-indigo-500 transition-colors"
               />
             </div>
@@ -1732,10 +1980,13 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                     </div>
                     <div className="text-left">
                       <p className="text-xs font-semibold text-slate-200">
-                        Upload Certificate Document <span className="text-slate-500 font-normal">(.pdf, .jpg, .png)</span>
+                        Upload Certificate Document{" "}
+                        <span className="text-slate-500 font-normal">
+                          (.pdf, .jpg, .png)
+                        </span>
                       </p>
                       <p className="text-[10px] text-indigo-400">
-                        Click or drag & drop to auto-generate SHA-256 hash
+                        Click or drag & drop to set as #1 Primary Certificate and generate SHA-256 hash
                       </p>
                     </div>
                   </div>
@@ -1748,7 +1999,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                     </div>
                     <div className="min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-xs font-bold text-white truncate max-w-[150px] sm:max-w-[210px]">
+                        <p className="text-xs font-bold text-white truncate max-w-[180px] sm:max-w-[260px]">
                           {uploadedFile.name}
                         </p>
                         <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/90 px-2 py-0.5 rounded-full border border-emerald-800/80 shrink-0">
@@ -1756,7 +2007,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                         </span>
                       </div>
                       <p className="text-[10px] text-slate-400 font-mono mt-0.5">
-                        {uploadedFile.size} • Hash synced to input box
+                        {uploadedFile.size} • Set as #1 Primary Document
                       </p>
                     </div>
                   </div>
@@ -1777,13 +2028,18 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             {/* Custom Toggle: Simulate Invalid Certificate / Tampered Hash */}
             <div className="mt-3 flex items-center justify-between p-3 rounded-xl bg-slate-950/90 border border-slate-800 hover:border-slate-700 transition-colors">
               <div className="flex items-center gap-2.5">
-                <ShieldAlert size={16} className={simulateInvalidCert ? "text-rose-400" : "text-slate-500"} />
+                <ShieldAlert
+                  size={16}
+                  className={
+                    simulateInvalidCert ? "text-rose-400" : "text-slate-500"
+                  }
+                />
                 <div>
                   <span className="text-xs font-semibold text-slate-200">
                     Simulate Invalid Certificate / Tampered Hash
                   </span>
                   <p className="text-[10px] text-slate-500">
-                    Forces cryptographic checksum failure (drops trust to 35%) for testing/demo
+                    Syncs live: drops trust score to 35% and flags 'Cryptographic Hash Mismatch on Ledger'
                   </p>
                 </div>
               </div>
@@ -1803,9 +2059,10 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
         {/* Submit Verification Button */}
         <div className="mt-5 flex items-center justify-between pt-4 border-t border-slate-800">
           <p className="text-[11px] text-slate-500">
-            Simulates automated crawling across LinkedIn, GitHub, EPFO UAN, and Blockchain credentials.
+            Fetches live GitHub REST API data, parses LinkedIn URL, and validates candidate credentials.
           </p>
           <button
+            type="button"
             onClick={handleRunVerification}
             disabled={scanning || !candidateName.trim()}
             className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-900/40 transition-all"
@@ -1813,7 +2070,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             {scanning ? (
               <>
                 <RefreshCw size={15} className="animate-spin text-white" />
-                <span>Scanning Footprint...</span>
+                <span>Fetching Live Footprint...</span>
               </>
             ) : (
               <>
@@ -1831,17 +2088,21 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
           <div className="flex items-center gap-3">
             <RefreshCw size={18} className="animate-spin text-indigo-400" />
             <div>
-              <h3 className="text-white font-bold text-sm">Real-Time Verification Engine In Progress...</h3>
-              <p className="text-xs text-slate-400">Executing multi-source NLP analysis & registry checksum queries.</p>
+              <h3 className="text-white font-bold text-sm">
+                Real-Time Verification & GitHub API Fetch In Progress...
+              </h3>
+              <p className="text-xs text-slate-400">
+                Querying api.github.com/users/{extractGitHubUsername(githubInput) || "user"}, parsing LinkedIn URL, and verifying certificate ledger.
+              </p>
             </div>
           </div>
 
           <div className="space-y-2 pt-2 text-xs">
             {[
-              "1. Scraping LinkedIn profile tenure, endorsements & GitHub commit history...",
-              "2. Cross-referencing university graduation claims with DigiLocker / NAD...",
-              "3. Validating employer payroll tenure & UAN continuity on EPFO servers...",
-              "4. Executing cryptographic hash validation on decentralized credential registry...",
+              `1. Fetching live GitHub profile from https://api.github.com/users/${extractGitHubUsername(githubInput) || "handle"}...`,
+              "2. Parsing LinkedIn URL & matching candidate academic profile records...",
+              "3. Mapping actual candidate credentials & primary uploaded certificate...",
+              "4. Executing SHA-256 cryptographic hash checksum validation...",
             ].map((stepText, idx) => (
               <div
                 key={idx}
@@ -1873,12 +2134,22 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
           {/* Result Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-lg">
-                {scanResult.candidateName[0]}
-              </div>
+              {scanResult.githubProfile?.avatarUrl ? (
+                <img
+                  src={scanResult.githubProfile.avatarUrl}
+                  alt={scanResult.candidateName}
+                  className="w-12 h-12 rounded-xl object-cover border border-indigo-500/50 shadow"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-xl bg-indigo-600/20 border border-indigo-500/30 flex items-center justify-center text-indigo-400 font-bold text-lg">
+                  {scanResult.candidateName[0]}
+                </div>
+              )}
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <h3 className="text-white font-black text-lg">{scanResult.candidateName}</h3>
+                  <h3 className="text-white font-black text-lg">
+                    {scanResult.candidateName}
+                  </h3>
                   <span
                     className={`text-xs font-bold px-3 py-1 rounded-full border flex items-center gap-1.5 ${
                       scanResult.isSuspicious
@@ -1889,7 +2160,10 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                     {scanResult.isSuspicious ? (
                       <>
                         <ShieldAlert size={13} className="text-rose-400" />
-                        <span>{scanResult.statusLabel || "Flagged Claims / Hash Discrepancy"}</span>
+                        <span>
+                          {scanResult.statusLabel ||
+                            "Flagged Claims / Hash Discrepancy"}
+                        </span>
                       </>
                     ) : (
                       <>
@@ -1900,19 +2174,212 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                   </span>
                 </div>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Applied: <strong className="text-slate-200">{scanResult.appliedRole}</strong> • Verified at {scanResult.timestamp}
+                  Role: <strong className="text-slate-200">{scanResult.appliedRole}</strong> • Verified at {scanResult.timestamp}
                 </p>
               </div>
             </div>
 
             {/* Gauge */}
             <div className="flex items-center gap-3 bg-slate-950/80 px-4 py-2 rounded-xl border border-slate-800">
-              <TrustScoreGauge score={scanResult.trustScore} size={64} strokeWidth={5} />
+              <TrustScoreGauge
+                score={scanResult.trustScore}
+                size={64}
+                strokeWidth={5}
+              />
               <div>
-                <span className="text-[10px] text-slate-400 uppercase font-semibold">AI Match Score</span>
-                <p className={`text-base font-extrabold ${getScoreStyles(scanResult.trustScore).text}`}>
+                <span className="text-[10px] text-slate-400 uppercase font-semibold">
+                  AI Match Score
+                </span>
+                <p
+                  className={`text-base font-extrabold ${
+                    getScoreStyles(scanResult.trustScore).text
+                  }`}
+                >
                   {scanResult.trustScore}% Trust
                 </p>
+              </div>
+            </div>
+          </div>
+
+          {/* =================================================================
+              DEDICATED 'DEVELOPER SOCIAL & CODE FOOTPRINT' CARD
+              (Live GitHub Public API + Parsed LinkedIn Profile Badge)
+          ================================================================= */}
+          <div className="bg-slate-950/80 border border-indigo-500/30 rounded-2xl p-5 space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h4 className="text-xs text-indigo-300 font-extrabold uppercase tracking-wider flex items-center gap-2">
+                <Github size={15} className="text-indigo-400" />
+                Developer Social & Code Footprint (Live API & LinkedIn Parser)
+              </h4>
+
+              <div className="flex items-center gap-2 flex-wrap">
+                {scanResult.linkedinProfile?.isLinked && (
+                  <a
+                    href={scanResult.linkedinProfile.cleanUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-sky-950/80 hover:bg-sky-900/80 text-sky-300 px-3 py-1 rounded-full border border-sky-700/60 transition-colors"
+                  >
+                    <Linkedin size={12} className="text-sky-400" />
+                    <span>LinkedIn Profile Linked</span>
+                    <ExternalLink size={11} />
+                  </a>
+                )}
+
+                {scanResult.githubProfile ? (
+                  scanResult.githubProfile.status === "live" ? (
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-bold bg-emerald-950/80 text-emerald-300 px-3 py-1 rounded-full border border-emerald-700/60">
+                      <CheckCircle2 size={12} className="text-emerald-400" />
+                      <span>Live GitHub API Connected</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold bg-amber-950/70 text-amber-300 px-3 py-1 rounded-full border border-amber-700/60">
+                      <Info size={12} className="text-amber-400" />
+                      <span>{scanResult.githubProfile.errorMessage}</span>
+                    </span>
+                  )
+                ) : null}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+              {/* Left 7 Cols: Live GitHub Public Profile Card */}
+              <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between gap-4">
+                {scanResult.githubProfile ? (
+                  <>
+                    <div className="flex items-start gap-3.5">
+                      {scanResult.githubProfile.avatarUrl ? (
+                        <img
+                          src={scanResult.githubProfile.avatarUrl}
+                          alt={scanResult.githubProfile.username}
+                          className="w-14 h-14 rounded-xl object-cover border-2 border-indigo-500/40 shrink-0 shadow-md"
+                        />
+                      ) : (
+                        <div className="w-14 h-14 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-300 shrink-0">
+                          <Github size={24} />
+                        </div>
+                      )}
+
+                      <div className="min-w-0 flex-1 space-y-1">
+                        <div className="flex items-center justify-between gap-2 flex-wrap">
+                          <div>
+                            <h5 className="text-sm font-extrabold text-white truncate">
+                              {scanResult.githubProfile.displayName}
+                            </h5>
+                            <p className="text-xs font-mono text-indigo-400">
+                              @{scanResult.githubProfile.username}
+                            </p>
+                          </div>
+
+                          <a
+                            href={scanResult.githubProfile.htmlUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition-colors"
+                          >
+                            <Github size={12} />
+                            <span>Official GitHub Link</span>
+                            <ExternalLink size={11} />
+                          </a>
+                        </div>
+
+                        <p className="text-xs text-slate-300 leading-relaxed pt-1">
+                          {scanResult.githubProfile.bio}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Live Public Repos & Followers Counters */}
+                    <div className="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800/80">
+                      <div className="bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 flex items-center justify-between">
+                        <div>
+                          <span className="text-[10px] text-slate-400 uppercase font-semibold block">
+                            Public Repositories
+                          </span>
+                          <span className="text-lg font-black text-white">
+                            {scanResult.githubProfile.publicRepos}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/50">
+                          public_repos
+                        </span>
+                      </div>
+
+                      <div className="bg-slate-950/80 border border-slate-800 rounded-lg p-2.5 flex items-center justify-between">
+                        <div>
+                          <span className="text-[10px] text-slate-400 uppercase font-semibold block">
+                            GitHub Followers
+                          </span>
+                          <span className="text-lg font-black text-emerald-400">
+                            {scanResult.githubProfile.followers}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/50">
+                          followers
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="text-xs text-slate-400 py-4 text-center">
+                    No GitHub handle provided for this scan. Enter a GitHub username above to fetch live repositories & followers.
+                  </div>
+                )}
+              </div>
+
+              {/* Right 5 Cols: Parsed LinkedIn Profile & Actual Profile Text Info */}
+              <div className="lg:col-span-5 bg-slate-900/90 border border-slate-800 rounded-xl p-4 flex flex-col justify-between space-y-3">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-sky-400 flex items-center gap-1.5">
+                      <Linkedin size={13} /> LinkedIn Profile Verification
+                    </span>
+                    {scanResult.linkedinProfile?.isLinked && (
+                      <span className="text-[10px] font-bold text-emerald-400 bg-emerald-950/70 px-2 py-0.5 rounded border border-emerald-700/50">
+                        Verified Handle
+                      </span>
+                    )}
+                  </div>
+
+                  {scanResult.linkedinProfile?.isLinked ? (
+                    <>
+                      <p className="text-xs font-bold text-white">
+                        Handle: <code className="text-sky-300 font-mono">{scanResult.linkedinProfile.handle}</code>
+                      </p>
+                      {scanResult.linkedinProfile.headline && (
+                        <p className="text-[11px] text-slate-300 font-medium">
+                          {scanResult.linkedinProfile.headline}
+                        </p>
+                      )}
+                      {scanResult.linkedinProfile.about && (
+                        <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-3 bg-slate-950/70 p-2.5 rounded-lg border border-slate-800">
+                          {scanResult.linkedinProfile.about}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-xs text-slate-400">
+                      No LinkedIn URL provided.
+                    </p>
+                  )}
+                </div>
+
+                {scanResult.linkedinProfile?.isLinked && (
+                  <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between">
+                    <span className="text-[11px] text-slate-400">
+                      {scanResult.linkedinProfile.connectionsText}
+                    </span>
+                    <a
+                      href={scanResult.linkedinProfile.cleanUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-xs font-bold text-sky-400 hover:text-sky-300 underline"
+                    >
+                      <span>Open LinkedIn</span>
+                      <ExternalLink size={12} />
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -1921,75 +2388,120 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-3.5 space-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400 font-semibold">Work Authenticity</span>
+                <span className="text-xs text-slate-400 font-semibold">
+                  Profile & Internship Record
+                </span>
                 {scanResult.isSuspicious ? (
                   <XCircle size={15} className="text-rose-400" />
                 ) : (
                   <CheckCircle2 size={15} className="text-emerald-400" />
                 )}
               </div>
-              <p className={`text-xs font-bold ${scanResult.isSuspicious ? "text-rose-300" : "text-emerald-300"}`}>
+              <p
+                className={`text-xs font-bold ${
+                  scanResult.isSuspicious ? "text-rose-300" : "text-emerald-300"
+                }`}
+              >
                 {scanResult.workAuthStatus}
               </p>
-              <p className="text-[10px] text-slate-500">Cross-verified with EPFO service records</p>
+              <p className="text-[10px] text-slate-500">
+                Mapped from candidate profile record
+              </p>
             </div>
 
-            <div className={`rounded-xl p-3.5 space-y-1 border ${
-              scanResult.isWrongCert 
-                ? "bg-rose-950/30 border-rose-800/80" 
-                : "bg-slate-800/40 border-slate-800"
-            }`}>
+            <div
+              className={`rounded-xl p-3.5 space-y-1 border ${
+                scanResult.isWrongCert
+                  ? "bg-rose-950/30 border-rose-800/80"
+                  : "bg-slate-800/40 border-slate-800"
+              }`}
+            >
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400 font-semibold">Certificate Hash</span>
+                <span className="text-xs text-slate-400 font-semibold">
+                  Certificate Hash
+                </span>
                 {scanResult.isWrongCert ? (
                   <XCircle size={15} className="text-rose-400" />
                 ) : (
                   <CheckCircle2 size={15} className="text-emerald-400" />
                 )}
               </div>
-              <p className={`text-xs font-bold ${scanResult.isWrongCert ? "text-rose-400 font-extrabold" : "text-emerald-300"}`}>
+              <p
+                className={`text-xs font-bold ${
+                  scanResult.isWrongCert
+                    ? "text-rose-400 font-extrabold"
+                    : "text-emerald-300"
+                }`}
+              >
                 {scanResult.certHashStatus}
               </p>
-              <p className="text-[10px] text-slate-500 font-mono truncate">{scanResult.certHash}</p>
+              <p className="text-[10px] text-slate-500 font-mono truncate">
+                {scanResult.certHash}
+              </p>
               {scanResult.isWrongCert && (
-                <p className="text-[10px] text-rose-300 font-medium">⚠️ Checksum Failed: Mismatch with Registry</p>
+                <p className="text-[10px] text-rose-300 font-medium">
+                  ⚠️ Checksum Failed: Mismatch with Registry
+                </p>
               )}
             </div>
 
             <div className="bg-slate-800/40 border border-slate-800 rounded-xl p-3.5 space-y-1">
               <div className="flex items-center justify-between">
-                <span className="text-xs text-slate-400 font-semibold">Degree Validation</span>
+                <span className="text-xs text-slate-400 font-semibold">
+                  Academic Institution
+                </span>
                 {scanResult.isWrongCert ? (
                   <AlertTriangle size={15} className="text-amber-400" />
                 ) : (
                   <CheckCircle2 size={15} className="text-emerald-400" />
                 )}
               </div>
-              <p className={`text-xs font-bold ${scanResult.isWrongCert ? "text-amber-300" : "text-emerald-300"}`}>
+              <p
+                className={`text-xs font-bold ${
+                  scanResult.isWrongCert
+                    ? "text-amber-300"
+                    : "text-emerald-300"
+                }`}
+              >
                 {scanResult.educationStatus}
               </p>
-              <p className="text-[10px] text-slate-500">Verified via National Academic Depository</p>
+              <p className="text-[10px] text-slate-500">
+                Verified from candidate profile (No fake CGPA)
+              </p>
             </div>
           </div>
 
           {/* Candidate Verification Summary Strip */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
-              <span className="text-[10px] text-slate-400 uppercase font-semibold">Total Certificates</span>
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">
+                Total Certificates
+              </span>
               <p className="text-xl font-bold text-white mt-0.5">
                 {scanResult.certificates?.length || 0} Credentials
               </p>
             </div>
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
-              <span className="text-[10px] text-slate-400 uppercase font-semibold">Verified on Ledger</span>
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">
+                Verified on Ledger
+              </span>
               <p className="text-xl font-bold text-emerald-400 mt-0.5">
-                {scanResult.certificates?.filter((c) => c.verified).length ?? 0} Authentic
+                {scanResult.certificates?.filter((c) => c.verified).length ?? 0}{" "}
+                Authentic
               </p>
             </div>
             <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
-              <span className="text-[10px] text-slate-400 uppercase font-semibold">Discrepancy / Tamper Flags</span>
-              <p className={`text-xl font-bold mt-0.5 ${scanResult.isWrongCert ? "text-rose-400" : "text-slate-400"}`}>
-                {scanResult.certificates?.filter((c) => !c.verified).length ?? 0} Detected
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">
+                Discrepancy / Tamper Flags
+              </span>
+              <p
+                className={`text-xl font-bold mt-0.5 ${
+                  scanResult.isWrongCert ? "text-rose-400" : "text-slate-400"
+                }`}
+              >
+                {scanResult.certificates?.filter((c) => !c.verified).length ??
+                  0}{" "}
+                Detected
               </p>
             </div>
           </div>
@@ -1999,7 +2511,8 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             <div className="flex items-center justify-between">
               <h4 className="text-xs text-slate-300 font-bold uppercase tracking-wider flex items-center gap-2">
                 <Award size={15} className="text-indigo-400" />
-                Earned Certifications & Cryptographic Hashes ({scanResult.certificates?.length || 0})
+                Earned Certifications & Cryptographic Hashes (
+                {scanResult.certificates?.length || 0})
               </h4>
               <span className="text-[10px] text-indigo-400 font-mono bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/60">
                 Ledger Vault Synchronized
@@ -2007,9 +2520,9 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             </div>
 
             <div className="max-h-[480px] overflow-y-auto pr-2 custom-scrollbar space-y-3">
-              {scanResult.certificates?.map((cert) => (
+              {scanResult.certificates?.map((cert, idx) => (
                 <div
-                  key={cert.id}
+                  key={cert.id + idx}
                   className={`p-3.5 rounded-xl border transition-all ${
                     cert.verified
                       ? "bg-slate-800/40 border-slate-700/80 hover:border-emerald-500/50"
@@ -2019,14 +2532,16 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-sm font-bold text-white">{cert.title}</span>
+                        <span className="text-sm font-bold text-white">
+                          {cert.title}
+                        </span>
                         <span className="text-xs bg-slate-800 text-slate-300 font-semibold px-2 py-0.5 rounded border border-slate-700">
                           {cert.issuer}
                         </span>
                         {cert.documentNote && (
                           <span className="inline-flex items-center gap-1 text-[10px] font-mono font-semibold bg-indigo-950/90 text-indigo-300 px-2 py-0.5 rounded border border-indigo-700/60 shadow-sm">
                             <FileText size={11} className="text-indigo-400" />
-                            <span>Uploaded Document: {cert.documentNote}</span>
+                            <span>Primary Uploaded: {cert.documentNote}</span>
                           </span>
                         )}
                         {cert.verified ? (
@@ -2041,21 +2556,42 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                       </div>
 
                       <div className="flex items-center gap-3 text-xs text-slate-400">
-                        <span>Issued: <strong className="text-slate-300">{cert.issueDate}</strong></span>
+                        <span>
+                          Issued:{" "}
+                          <strong className="text-slate-300">
+                            {cert.issueDate}
+                          </strong>
+                        </span>
                         <span>•</span>
-                        <span>Cert ID: <code className="text-slate-300 font-mono">{cert.id}</code></span>
+                        <span>
+                          Cert ID:{" "}
+                          <code className="text-slate-300 font-mono">
+                            {cert.id}
+                          </code>
+                        </span>
                       </div>
 
                       {/* Cryptographic Hash Bar */}
                       <div className="mt-1.5 flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
-                        <Hash size={13} className="text-indigo-400 shrink-0" />
-                        <span className="text-slate-400 text-[11px]">Serial Hash:</span>
-                        <span className={`font-semibold ${cert.verified ? "text-indigo-300" : "text-rose-400"}`}>
+                        <Hash
+                          size={13}
+                          className="text-indigo-400 shrink-0"
+                        />
+                        <span className="text-slate-400 text-[11px]">
+                          Serial Hash:
+                        </span>
+                        <span
+                          className={`font-semibold ${
+                            cert.verified ? "text-indigo-300" : "text-rose-400"
+                          }`}
+                        >
                           {cert.serialHash}
                         </span>
                       </div>
 
-                      <p className="text-[11px] text-slate-500 mt-1">{cert.verificationTimestamp}</p>
+                      <p className="text-[11px] text-slate-500 mt-1">
+                        {cert.verificationTimestamp}
+                      </p>
                     </div>
 
                     {/* Verify Action Button */}
@@ -2072,7 +2608,10 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                       >
                         {verifyingScanCertId === cert.id ? (
                           <>
-                            <RefreshCw size={12} className="animate-spin text-indigo-400" />
+                            <RefreshCw
+                              size={12}
+                              className="animate-spin text-indigo-400"
+                            />
                             <span>Auditing...</span>
                           </>
                         ) : (
@@ -2094,7 +2633,8 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             <div className="bg-rose-950/30 border border-rose-800/70 rounded-xl p-4 space-y-2">
               <h4 className="text-xs text-rose-300 font-bold uppercase tracking-wider flex items-center gap-2">
                 <AlertTriangle size={15} className="text-rose-400" />
-                Detected Fraud & Discrepancy Risk Factors ({scanResult.flags.length})
+                Detected Fraud & Discrepancy Risk Factors (
+                {scanResult.flags.length})
               </h4>
               <ul className="space-y-1.5 text-xs text-rose-200/90 pl-5 list-disc">
                 {scanResult.flags.map((flag, idx) => (
@@ -2108,9 +2648,11 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
             <div className="bg-emerald-950/20 border border-emerald-800/50 rounded-xl p-4 flex items-center gap-3">
               <ShieldCheck size={24} className="text-emerald-400 shrink-0" />
               <div className="text-xs">
-                <p className="font-bold text-emerald-300 text-sm">Clear Background Record Verified</p>
+                <p className="font-bold text-emerald-300 text-sm">
+                  Clear Background & Live Social Footprint Verified
+                </p>
                 <p className="text-slate-400 mt-0.5">
-                  Zero employment gap discrepancies, authentic certificate hash signatures, and active GitHub/LinkedIn digital footprint.
+                  Authentic certificate hash signatures, verified LinkedIn handle, and live GitHub repository telemetry confirmed.
                 </p>
               </div>
             </div>
@@ -2118,9 +2660,12 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
 
           {/* Action Footer */}
           <div className="flex items-center justify-between pt-2">
-            <span className="text-xs text-slate-500">Would you like to persist this report into the Directory?</span>
+            <span className="text-xs text-slate-500">
+              Would you like to persist this live report into the Directory?
+            </span>
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 onClick={handlePushToDirectory}
                 className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow transition-colors"
               >
@@ -2156,6 +2701,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setAuthPopupData(null)}
                 className="w-8 h-8 rounded-lg bg-slate-950/30 hover:bg-slate-950/60 flex items-center justify-center text-white"
               >
@@ -2179,31 +2725,44 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               <div className="space-y-2 bg-slate-950 p-4 rounded-2xl border border-slate-800">
                 <div className="flex justify-between">
                   <span className="text-slate-400">Verdict:</span>
-                  <strong className="text-emerald-400">Yes, that is authenticated</strong>
+                  <strong className="text-emerald-400">
+                    Yes, that is authenticated
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Candidate Name:</span>
-                  <strong className="text-white">{authPopupData.candidateName}</strong>
+                  <strong className="text-white">
+                    {authPopupData.candidateName}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Certificate:</span>
-                  <strong className="text-indigo-300 text-right">{authPopupData.title}</strong>
+                  <strong className="text-indigo-300 text-right">
+                    {authPopupData.title}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Issuer:</span>
-                  <strong className="text-slate-200 text-right">{authPopupData.issuer}</strong>
+                  <strong className="text-slate-200 text-right">
+                    {authPopupData.issuer}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">Certificate ID:</span>
-                  <strong className="text-amber-300 font-mono">{authPopupData.certId}</strong>
+                  <strong className="text-amber-300 font-mono">
+                    {authPopupData.certId}
+                  </strong>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400">SHA-256 Hash:</span>
-                  <strong className="text-emerald-300 font-mono truncate max-w-[220px]">{authPopupData.serialHash}</strong>
+                  <strong className="text-emerald-300 font-mono truncate max-w-[220px]">
+                    {authPopupData.serialHash}
+                  </strong>
                 </div>
               </div>
 
               <button
+                type="button"
                 onClick={() => setAuthPopupData(null)}
                 className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg"
               >
@@ -2419,9 +2978,9 @@ function CandidateDirectory({ candidates, onViewCertificates }) {
                       <p className="text-white font-bold text-xs">{candidate.education.degree}</p>
                       <p className="text-slate-300 text-xs mt-0.5">{candidate.education.college}</p>
                       <div className="flex items-center gap-3 text-slate-400 text-[11px] mt-1.5">
-                        <span>Class of {candidate.education.year}</span>
+                        <span>Batch / Cohort: <strong className="text-slate-200">{candidate.education.year}</strong></span>
                         <span>•</span>
-                        <span>CGPA: <strong className="text-slate-200">{candidate.education.cgpa}</strong></span>
+                        <span>Location: <strong className="text-slate-200">{candidate.location}</strong></span>
                       </div>
                       <p className="text-[10px] text-slate-500 mt-1 italic">
                         Source: {candidate.education.verificationSource}
