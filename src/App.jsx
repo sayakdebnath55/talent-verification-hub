@@ -4,14 +4,15 @@
 // Complete Single-File React + Tailwind CSS Application
 // =============================================================================
 
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useRef } from "react";
 import {
   Search, Shield, ShieldCheck, ShieldAlert, Award, Briefcase,
   GraduationCap, CheckCircle2, XCircle, Clock, TrendingUp,
   Users, Eye, X, Linkedin, Github, Globe, Zap, Lock, Hash,
   ChevronRight, AlertTriangle, Info, Download, RefreshCw,
   Fingerprint, BadgeCheck, ExternalLink, Filter, Sparkles,
-  Check, ArrowUpRight, SlidersHorizontal, PlusCircle
+  Check, ArrowUpRight, SlidersHorizontal, PlusCircle,
+  FileText, Upload, Trash2
 } from "lucide-react";
 
 // =============================================================================
@@ -890,6 +891,53 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
   const [certHash, setCertHash] = useState("");
   const [appliedRole, setAppliedRole] = useState("Full Stack Developer");
 
+  // Uploaded certificate document state
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
+
+  // Helper to generate a realistic mock SHA-256 cryptographic hash from file name
+  const generateMockSHA256 = (filename) => {
+    const chars = "0123456789ABCDEF";
+    let hash = "0x";
+    let seed = 0;
+    for (let i = 0; i < filename.length; i++) {
+      seed = (seed << 5) - seed + filename.charCodeAt(i);
+      seed |= 0;
+    }
+    for (let i = 0; i < 32; i++) {
+      seed = (seed * 9301 + 49297) % 233280;
+      const rnd = Math.floor((Math.abs(seed) / 233280) * chars.length);
+      hash += chars[rnd];
+    }
+    return hash;
+  };
+
+  // Handler when user selects or drops a PDF / certificate file
+  const handleProcessFile = (file) => {
+    if (!file) return;
+    const sizeStr = file.size > 1024 * 1024
+      ? (file.size / (1024 * 1024)).toFixed(2) + " MB"
+      : (file.size / 1024).toFixed(1) + " KB";
+
+    const autoHash = generateMockSHA256(file.name);
+    setUploadedFile({
+      name: file.name,
+      size: sizeStr,
+      type: file.type || "Document",
+    });
+    setCertHash(autoHash);
+  };
+
+  // Clear uploaded file handler
+  const handleClearFile = () => {
+    setUploadedFile(null);
+    setCertHash("");
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   // Scan simulation state
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
@@ -902,16 +950,28 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
       setProfileUrl("https://linkedin.com/in/siddharth-mehra-dev");
       setCertHash("0xDEAD5500AA99BEEF");
       setAppliedRole("DevOps Specialist");
+      setUploadedFile({
+        name: "IBM_Enterprise_Blockchain_Cert.pdf",
+        size: "348 KB",
+        type: "application/pdf",
+      });
     } else if (type === "verified") {
       setCandidateName("Rhea Mukherjee");
       setProfileUrl("https://linkedin.com/in/rhea-mukherjee-ai");
       setCertHash("0x88F1AA99BB3344EE");
       setAppliedRole("AI / ML Engineer");
+      setUploadedFile({
+        name: "Stanford_Online_Deep_Learning.pdf",
+        size: "412 KB",
+        type: "application/pdf",
+      });
     } else {
       setCandidateName("");
       setProfileUrl("");
       setCertHash("");
       setAppliedRole("Full Stack Developer");
+      setUploadedFile(null);
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
     setScanResult(null);
   };
@@ -1134,6 +1194,88 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
                 placeholder="e.g., 0x7A4F89D201B456C1 (or type 0xDEAD for fake)"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm font-mono focus:outline-none focus:border-indigo-500 transition-colors"
               />
+            </div>
+
+            {/* Interactive PDF / Document Upload Zone */}
+            <div className="mt-2.5">
+              {!uploadedFile ? (
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDragging(true);
+                  }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDragging(false);
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                      handleProcessFile(e.dataTransfer.files[0]);
+                    }
+                  }}
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-xl p-3 text-center cursor-pointer transition-all ${
+                    isDragging
+                      ? "border-indigo-400 bg-indigo-950/50 text-indigo-200 scale-[1.01]"
+                      : "border-slate-700/80 hover:border-indigo-500/80 bg-slate-950/60 hover:bg-slate-950 text-slate-400"
+                  }`}
+                >
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        handleProcessFile(e.target.files[0]);
+                      }
+                    }}
+                    accept=".pdf,.jpg,.png"
+                    className="hidden"
+                  />
+                  <div className="flex items-center justify-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-indigo-950/80 border border-indigo-700/60 flex items-center justify-center text-indigo-400 shrink-0">
+                      <Upload size={14} />
+                    </div>
+                    <div className="text-left">
+                      <p className="text-xs font-semibold text-slate-200">
+                        Upload Certificate Document <span className="text-slate-500 font-normal">(.pdf, .jpg, .png)</span>
+                      </p>
+                      <p className="text-[10px] text-indigo-400">
+                        Click or drag & drop to auto-generate SHA-256 hash
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="bg-slate-950 border border-slate-700/90 rounded-xl p-3 flex items-center justify-between gap-3 shadow-md animate-in fade-in duration-200">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-8 h-8 rounded-lg bg-rose-950/70 border border-rose-700/70 flex items-center justify-center text-rose-400 shrink-0">
+                      <FileText size={16} />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-xs font-bold text-white truncate max-w-[150px] sm:max-w-[210px]">
+                          {uploadedFile.name}
+                        </p>
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-400 bg-emerald-950/90 px-2 py-0.5 rounded-full border border-emerald-800/80 shrink-0">
+                          <CheckCircle2 size={11} /> SHA-256 Generated
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-slate-400 font-mono mt-0.5">
+                        {uploadedFile.size} • Hash synced to input box
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleClearFile}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-rose-950/80 hover:text-rose-300 text-slate-400 text-xs font-semibold border border-slate-700 hover:border-rose-700/60 transition-colors shrink-0"
+                    title="Clear File"
+                  >
+                    <Trash2 size={12} />
+                    <span>Clear File</span>
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </div>
