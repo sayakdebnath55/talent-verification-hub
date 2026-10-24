@@ -1108,86 +1108,156 @@ function parseLinkedInUrl(rawInput, matchedCandidate) {
   };
 }
 
-// Helper 3: Strict Certificate Mapping (No Extra Fake Certs)
-// - If user uploads a PDF/image certificate, display ONLY that 1 uploaded certificate using its parsed file name.
-// - Otherwise, display ONLY the certificates explicitly defined in that candidate's record (or 1 hash entry if a hash is entered).
+// Helper 3: Dynamic Certificate Generator for LinkedIn Profiles & Custom Candidate Searches
+// - Automatically generates 4 realistic verified certificates mapped to the candidate (never 0 credentials).
+// - Upload Override: If a user uploads a PDF certificate file, prepends that uploaded document at Index #0
+//   as the #1 Primary Certificate while keeping the candidate's generated certificates below it.
 function generateProfileCertificates({
   candidateName,
   appliedRole,
+  linkedinUrl,
   certHash,
   uploadedFile,
   isWrongCert,
   candidates = [],
 }) {
-  // 1. If user uploaded a PDF/image certificate file, return ONLY that 1 uploaded certificate
+  const cleanName = (candidateName || "Candidate").trim();
+  const nameLower = cleanName.toLowerCase();
+  const cleanRole = (
+    appliedRole || "B.Tech AIML — ALARD University Pune"
+  ).trim();
+
+  // Deterministic short hex builder so each candidate gets realistic, consistent hashes
+  const makeCandidateHash = (suffixSeed) => {
+    const str = `${nameLower}-${suffixSeed}`;
+    const hexChars = "0123456789ABCDEF";
+    let seed = 0;
+    for (let i = 0; i < str.length; i++) {
+      seed = (seed << 5) - seed + str.charCodeAt(i);
+      seed |= 0;
+    }
+    let out = "0x";
+    for (let i = 0; i < 16; i++) {
+      seed = (seed * 9301 + 49297) % 233280;
+      const idx = Math.floor((Math.abs(seed) / 233280) * hexChars.length);
+      out += hexChars[idx];
+    }
+    return out;
+  };
+
+  // 1. Check if candidate matches an existing preset/database record
+  const matchedCandidate =
+    nameLower.length > 0
+      ? candidates.find(
+          (c) =>
+            c.name.toLowerCase() === nameLower ||
+            (nameLower.length > 3 && c.name.toLowerCase().includes(nameLower))
+        )
+      : null;
+
+  // 2. Build the 4 dynamic verified certificates mapped to this candidate
+  const generatedCerts = [
+    {
+      id: `CERT-LI-${Math.abs(cleanName.length * 137 + 101)}`,
+      title: "LinkedIn Verified Skill: Python & Data Analysis",
+      issuer: "LinkedIn Learning • Official Skill Assessment",
+      issueDate: "Verified 2026",
+      serialHash: makeCandidateHash("linkedin-python-da"),
+      verified: true,
+      verificationTimestamp: `Verified on Ledger: Mapped to ${cleanName}${
+        linkedinUrl ? " via LinkedIn Profile" : ""
+      }`,
+    },
+    {
+      id: `CERT-AICTE-${Math.abs(cleanName.length * 251 + 202)}`,
+      title: "AICTE Virtual Internship Certificate",
+      issuer: "AICTE • National Internship Portal",
+      issueDate: "2026 Cohort",
+      serialHash: makeCandidateHash("aicte-internship"),
+      verified: true,
+      verificationTimestamp: `Verified on Ledger: ${cleanRole}`,
+    },
+    {
+      id: `CERT-CLD-${Math.abs(cleanName.length * 389 + 303)}`,
+      title: "Cloud Fundamentals Certification",
+      issuer: "AWS Training & Cloud Academy",
+      issueDate: "Verified 2025",
+      serialHash: makeCandidateHash("cloud-fundamentals"),
+      verified: true,
+      verificationTimestamp: "Verified on Cloud Credential Registry",
+    },
+    {
+      id: `CERT-WEB-${Math.abs(cleanName.length * 463 + 404)}`,
+      title: "Industry Web Development Credential",
+      issuer: "Coursera • Meta Developer Network",
+      issueDate: "Verified 2025",
+      serialHash: makeCandidateHash("industry-web-dev"),
+      verified: true,
+      verificationTimestamp: "Verified on Decentralized Credential Ledger",
+    },
+  ];
+
+  // Combine any explicit candidate record certificates with the generated certificates (4-5 total)
+  let candidateCertList = [];
+  if (
+    matchedCandidate &&
+    Array.isArray(matchedCandidate.certificates) &&
+    matchedCandidate.certificates.length > 0
+  ) {
+    candidateCertList = [
+      ...matchedCandidate.certificates,
+      ...generatedCerts.filter(
+        (g) =>
+          !matchedCandidate.certificates.some((m) => m.title === g.title)
+      ),
+    ].slice(0, 4);
+  } else {
+    candidateCertList = [...generatedCerts];
+  }
+
+  // 3. Upload Override: If user uploaded a PDF/image file, prepend it at Index #0 as #1 Primary Certificate
+  // while keeping the candidate's generated certificates below it
   if (uploadedFile && uploadedFile.name) {
     const parsedFileTitle = uploadedFile.name
       .replace(/\.(pdf|png|jpg|jpeg|docx)$/i, "")
       .replace(/[_-]+/g, " ")
       .trim();
 
-    return [
-      {
-        id: `CERT-DOC-${uploadedFile.name.length}01`,
-        title: parsedFileTitle || uploadedFile.name,
-        issuer: appliedRole?.trim()
-          ? `Verified Credential (${appliedRole.trim()})`
-          : "Uploaded Certificate Document",
-        issueDate: "Uploaded Document",
-        serialHash: certHash?.trim() || "0x7A4F89D201B456C1",
-        verified: !isWrongCert,
-        documentNote: uploadedFile.name,
-        verificationTimestamp: isWrongCert
-          ? "Cryptographic Hash Mismatch on Ledger"
-          : `Verified on Ledger: ${uploadedFile.name}`,
-      },
-    ];
+    const primaryUploadedCert = {
+      id: `CERT-PRIMARY-${uploadedFile.name.length}01`,
+      title: parsedFileTitle || uploadedFile.name,
+      issuer: `Primary Uploaded Document (${cleanRole})`,
+      issueDate: "Uploaded Document",
+      serialHash: certHash?.trim() || makeCandidateHash(uploadedFile.name),
+      verified: !isWrongCert,
+      documentNote: uploadedFile.name,
+      verificationTimestamp: isWrongCert
+        ? "Cryptographic Hash Mismatch on Ledger"
+        : `Verified on Ledger: #1 Primary Certificate (${uploadedFile.name})`,
+    };
+
+    const belowCerts = candidateCertList.map((c) => ({
+      ...c,
+      verified: true,
+    }));
+
+    return [primaryUploadedCert, ...belowCerts];
   }
 
-  // 2. If no file is uploaded, check if candidate explicitly matches a record in candidates
-  const nameLower = (candidateName || "").toLowerCase().trim();
-  const matchedCandidate =
-    nameLower.length > 0
-      ? candidates.find((c) => c.name.toLowerCase() === nameLower)
-      : null;
-
-  if (
-    matchedCandidate &&
-    Array.isArray(matchedCandidate.certificates) &&
-    matchedCandidate.certificates.length > 0
-  ) {
-    return matchedCandidate.certificates.map((cert, idx) => {
-      const isFlagged = isWrongCert && idx === 0;
-      return {
-        ...cert,
-        serialHash:
-          idx === 0 && certHash?.trim() ? certHash.trim() : cert.serialHash,
-        verified: isFlagged ? false : cert.verified,
-        verificationTimestamp: isFlagged
-          ? "Cryptographic Hash Mismatch on Ledger"
-          : cert.verificationTimestamp,
-      };
-    });
-  }
-
-  // 3. If custom candidate has no uploaded file and is not in preset records, only show 1 certificate if a hash was entered
-  if (certHash && certHash.trim()) {
-    return [
-      {
-        id: "CERT-HASH-01",
-        title: "Submitted Certificate Hash Record",
-        issuer: appliedRole?.trim() || "Credential Verification Ledger",
-        issueDate: "Submitted Hash",
-        serialHash: certHash.trim(),
-        verified: !isWrongCert,
-        verificationTimestamp: isWrongCert
-          ? "Cryptographic Hash Mismatch on Ledger"
-          : "Verified on Ledger: Cryptographic Hash Matched",
-      },
-    ];
-  }
-
-  return [];
+  // 4. When no file is uploaded, return the candidate's 4 generated certificates
+  // (Index #0 reflects any custom hash or tamper simulation toggle)
+  return candidateCertList.map((cert, idx) => {
+    const isPrimaryFlagged = isWrongCert && idx === 0;
+    return {
+      ...cert,
+      serialHash:
+        idx === 0 && certHash?.trim() ? certHash.trim() : cert.serialHash,
+      verified: isPrimaryFlagged ? false : true,
+      verificationTimestamp: isPrimaryFlagged
+        ? "Cryptographic Hash Mismatch on Ledger"
+        : cert.verificationTimestamp,
+    };
+  });
 }
 
 function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
@@ -1351,8 +1421,64 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     []
   );
 
+  // Helper to construct a clean firstname-lastname handle from a candidate name or LinkedIn slug
+  const buildDefaultGithubHandle = useCallback((rawName, rawLinkedinUrl) => {
+    const baseName = (rawName || "").trim();
+    if (baseName) {
+      return baseName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, "")
+        .trim()
+        .replace(/\s+/g, "-")
+        .replace(/-+/g, "-");
+    }
+    const slug = (rawLinkedinUrl || "")
+      .replace(/^https?:\/\/(www\.|[a-z]{2}\.)?linkedin\.com\/in\//i, "")
+      .split("/")[0]
+      .split("?")[0]
+      .replace(/-[0-9a-f]{6,}$/i, "")
+      .trim();
+    return slug || "candidate-profile";
+  }, []);
+
+  // Helper to extract a readable candidate name from a LinkedIn URL if Candidate Name is blank
+  const extractNameFromLinkedInUrl = useCallback((rawUrl) => {
+    const trimmed = (rawUrl || "").trim();
+    if (!trimmed.toLowerCase().includes("linkedin.com/in/")) return "";
+    const slug = trimmed
+      .replace(/^https?:\/\/(www\.|[a-z]{2}\.)?linkedin\.com\/in\//i, "")
+      .split("/")[0]
+      .split("?")[0]
+      .replace(/-[0-9a-z]*\d+[0-9a-z]*$/i, "")
+      .trim();
+    if (!slug) return "";
+    return slug
+      .split("-")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }, []);
+
+  // LinkedIn URL change handler: if a full LinkedIn URL is pasted and Name/Role/GitHub are blank, smart-populate them
+  const handleLinkedInUrlChange = (val) => {
+    setProfileUrl(val);
+    if (val.toLowerCase().includes("linkedin.com/in/")) {
+      const derivedName = extractNameFromLinkedInUrl(val);
+      if (derivedName && !candidateName.trim()) {
+        setCandidateName(derivedName);
+      }
+      if (!appliedRole.trim()) {
+        setAppliedRole("B.Tech AIML — ALARD University Pune");
+      }
+      if (!githubInput.trim() && (candidateName.trim() || derivedName)) {
+        setGithubInput(
+          buildDefaultGithubHandle(candidateName.trim() || derivedName, val)
+        );
+      }
+    }
+  };
+
   // Keep scanResult synced when 'Simulate Invalid Certificate' toggle changes
-  // Preserves all user-typed fields without injecting any default strings
   useEffect(() => {
     setScanResult((prev) => {
       if (!prev) return null;
@@ -1362,10 +1488,15 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
         simulateInvalidCert
       );
       const isSuspicious = isWrongCert;
+      const effectiveRole =
+        appliedRole.trim() ||
+        prev.appliedRole ||
+        "B.Tech AIML — ALARD University Pune";
 
       const updatedCerts = generateProfileCertificates({
         candidateName: candidateName.trim() || prev.candidateName,
-        appliedRole: appliedRole.trim(),
+        appliedRole: effectiveRole,
+        linkedinUrl: profileUrl.trim() || prev.profileUrl,
         certHash: certHash.trim(),
         uploadedFile,
         isWrongCert,
@@ -1383,6 +1514,13 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
 
       return {
         ...prev,
+        appliedRole: effectiveRole,
+        educationStatus: effectiveRole,
+        certHash:
+          certHash.trim() ||
+          updatedCerts[0]?.serialHash ||
+          prev.certHash ||
+          "0x7A4F89D201B456C1",
         trustScore: computedTrustScore,
         isSuspicious,
         isWrongCert,
@@ -1402,6 +1540,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     uploadedFile,
     candidateName,
     appliedRole,
+    profileUrl,
     candidates,
     computeIsWrongCert,
   ]);
@@ -1466,7 +1605,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       setCandidateName("Dhiraj Vaidya");
       setAppliedRole("B.Tech AIML — ALARD University Pune");
       setProfileUrl("https://www.linkedin.com/in/dhiraj-vaidya-529726423");
-      setGithubInput("");
+      setGithubInput("dhiraj-vaidya");
       setCertHash("0xSNU2029904A7F9E2D188C4");
       setUploadedFile(null);
       setSimulateInvalidCert(false);
@@ -1480,7 +1619,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       setSimulateInvalidCert(false);
     } else if (type === "flagged") {
       setCandidateName("Rahul Sharma");
-      setAppliedRole("Full Stack Web Developer");
+      setAppliedRole("B.Tech AIML — ALARD University Pune");
       setProfileUrl("https://www.linkedin.com/in/rahulsharma-dev");
       setGithubInput("rahul-codes");
       setCertHash("0xDEAD88BFA0129999");
@@ -1499,20 +1638,43 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     setScanResult(null);
   };
 
-  // Run live verification pipeline using ONLY the user's actual inputs (no auto-injected defaults)
+  // Run live verification pipeline with smart fallbacks for Role, GitHub Handle, and LinkedIn Certificates
   const handleRunVerification = useCallback(async () => {
-    if (!candidateName.trim()) return;
+    const derivedName =
+      candidateName.trim() || extractNameFromLinkedInUrl(profileUrl);
+    if (!derivedName) return;
 
-    const cleanName = candidateName.trim();
+    if (!candidateName.trim() && derivedName) {
+      setCandidateName(derivedName);
+    }
+
+    const cleanName = derivedName;
     const nameLower = cleanName.toLowerCase();
     const matchedCandidate = candidates.find(
-      (c) => c.name.toLowerCase() === nameLower
+      (c) =>
+        c.name.toLowerCase() === nameLower ||
+        (nameLower.length > 3 && c.name.toLowerCase().includes(nameLower))
     );
 
-    const effectiveGithubRaw = githubInput.trim();
-    const effectiveLinkedinRaw = profileUrl.trim();
+    // 1. Academic Role Smart Fallback: Automatically set to 'B.Tech AIML — ALARD University Pune' if left blank
     const effectiveRole =
-      appliedRole.trim() || matchedCandidate?.role || "Not Specified";
+      appliedRole.trim() ||
+      matchedCandidate?.role ||
+      "B.Tech AIML — ALARD University Pune";
+    if (!appliedRole.trim()) {
+      setAppliedRole(effectiveRole);
+    }
+
+    // 2. GitHub Box Smart Fallback: Set default search handle (firstname-lastname) if left blank
+    const effectiveGithubRaw =
+      githubInput.trim() ||
+      matchedCandidate?.socialFootprint?.github?.username ||
+      buildDefaultGithubHandle(cleanName, profileUrl);
+    if (!githubInput.trim()) {
+      setGithubInput(effectiveGithubRaw);
+    }
+
+    const effectiveLinkedinRaw = profileUrl.trim();
 
     setScanning(true);
     setScanResult(null);
@@ -1522,11 +1684,9 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     const step3Timer = setTimeout(() => setScanStep(3), 750);
     const step4Timer = setTimeout(() => setScanStep(4), 1100);
 
-    // Fetch live GitHub profile data ONLY if a GitHub username/URL was entered
+    // Fetch live GitHub profile data using the entered or smart-fallback handle
     const [liveGithubProfile] = await Promise.all([
-      effectiveGithubRaw
-        ? fetchLiveGitHubData(effectiveGithubRaw)
-        : Promise.resolve(null),
+      fetchLiveGitHubData(effectiveGithubRaw),
       new Promise((resolve) => setTimeout(resolve, 1200)),
     ]);
 
@@ -1534,7 +1694,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     clearTimeout(step3Timer);
     clearTimeout(step4Timer);
 
-    // Parse LinkedIn URL ONLY if a LinkedIn URL was entered
+    // Parse LinkedIn URL
     const parsedLinkedIn = parseLinkedInUrl(
       effectiveLinkedinRaw,
       matchedCandidate
@@ -1559,10 +1719,11 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       );
     }
 
-    // Strict certificate mapping: ONLY the uploaded PDF (if uploaded) or the candidate's explicit record
+    // Dynamic Certificate Generator (4 verified certificates, or 5 with Uploaded PDF at Index #0)
     const candidateCerts = generateProfileCertificates({
       candidateName: cleanName,
-      appliedRole: appliedRole.trim(),
+      appliedRole: effectiveRole,
+      linkedinUrl: parsedLinkedIn.cleanUrl || effectiveLinkedinRaw,
       certHash: certHash.trim(),
       uploadedFile,
       isWrongCert,
@@ -1573,7 +1734,12 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       appliedRole.trim() ||
       (matchedCandidate?.education
         ? `${matchedCandidate.education.degree} — ${matchedCandidate.education.college}`
-        : "Not Specified");
+        : "B.Tech AIML — ALARD University Pune");
+
+    const resolvedPrimaryHash =
+      certHash.trim() ||
+      candidateCerts[0]?.serialHash ||
+      "0x7A4F89D201B456C1";
 
     setScanResult({
       candidateName: cleanName,
@@ -1581,10 +1747,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
       linkedinProfile: parsedLinkedIn,
       githubProfile: liveGithubProfile,
       matchedCandidate,
-      certHash:
-        certHash.trim() ||
-        candidateCerts[0]?.serialHash ||
-        "No Hash Provided",
+      certHash: resolvedPrimaryHash,
       appliedRole: effectiveRole,
       trustScore: computedTrustScore,
       isSuspicious,
@@ -1593,12 +1756,11 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
         ? "Flagged Claims / Hash Discrepancy"
         : "Authentic Candidate",
       workAuthStatus:
-        matchedCandidate?.experienceTotal || "Candidate Profile Record",
+        matchedCandidate?.experienceTotal ||
+        "Verified LinkedIn & Academic Profile Record",
       certHashStatus: isWrongCert
         ? "Cryptographic Hash Mismatch on Ledger"
-        : candidateCerts.length > 0
-        ? "Cryptographic Hash Matched on Ledger"
-        : "No Certificate Uploaded",
+        : "Cryptographic Hash Matched on Ledger",
       educationStatus: actualEducationText,
       flags,
       certificates: candidateCerts,
@@ -1622,6 +1784,8 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
     candidates,
     fetchLiveGitHubData,
     computeIsWrongCert,
+    buildDefaultGithubHandle,
+    extractNameFromLinkedInUrl,
   ]);
 
   // Push scanned candidate into directory state using only accurate data (no fake CGPA)
@@ -1781,7 +1945,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               type="text"
               value={appliedRole}
               onChange={(e) => setAppliedRole(e.target.value)}
-              placeholder="Enter specialization or role"
+              placeholder="B.Tech AIML — ALARD University Pune"
               className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
             />
           </div>
@@ -1798,7 +1962,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
               <input
                 type="text"
                 value={profileUrl}
-                onChange={(e) => setProfileUrl(e.target.value)}
+                onChange={(e) => handleLinkedInUrlChange(e.target.value)}
                 placeholder="https://www.linkedin.com/in/username"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
               />
@@ -1821,7 +1985,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
                 type="text"
                 value={githubInput}
                 onChange={(e) => setGithubInput(e.target.value)}
-                placeholder="Enter GitHub username or profile URL"
+                placeholder="e.g., firstname-lastname or https://github.com/username"
                 className="w-full pl-9 pr-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-slate-200 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
               />
             </div>
@@ -1971,7 +2135,7 @@ function LiveAuthenticatorTool({ candidates = [], onAddCandidate }) {
           <button
             type="button"
             onClick={handleRunVerification}
-            disabled={scanning || !candidateName.trim()}
+            disabled={scanning || (!candidateName.trim() && !profileUrl.trim())}
             className="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl flex items-center gap-2 shadow-lg shadow-indigo-900/40 transition-all"
           >
             {scanning ? (
