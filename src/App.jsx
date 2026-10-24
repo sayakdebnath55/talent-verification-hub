@@ -942,9 +942,40 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
   const [scanning, setScanning] = useState(false);
   const [scanStep, setScanStep] = useState(0);
   const [scanResult, setScanResult] = useState(null);
+  const [verifyingScanCertId, setVerifyingScanCertId] = useState(null);
 
   // Custom toggle to simulate invalid/tampered certificate
   const [simulateInvalidCert, setSimulateInvalidCert] = useState(false);
+
+  // Handler to verify a specific certificate's hash inside the scan result report
+  const handleVerifyScanCert = (cert) => {
+    setVerifyingScanCertId(cert.id);
+    setTimeout(() => {
+      const isFake =
+        cert.serialHash.toLowerCase().includes("dead") ||
+        cert.serialHash.toLowerCase().includes("fake") ||
+        cert.serialHash.toLowerCase().includes("tampered") ||
+        cert.serialHash.toLowerCase().includes("wrong") ||
+        (cert.id === "CERT-ML-8810" && scanResult?.isWrongCert);
+
+      setScanResult((prev) => {
+        if (!prev) return null;
+        const updated = prev.certificates.map((c) =>
+          c.id === cert.id
+            ? {
+                ...c,
+                verified: !isFake,
+                verificationTimestamp: isFake
+                  ? "Verification Failed: Checksum Mismatch against Central Issuer Registry"
+                  : `Verified on Ledger: Hash Authenticated (${new Date().toLocaleTimeString("en-IN")})`,
+              }
+            : c
+        );
+        return { ...prev, certificates: updated };
+      });
+      setVerifyingScanCertId(null);
+    }, 700);
+  };
 
   // Quick Preset Handlers
   const handleLoadPreset = (type) => {
@@ -1045,6 +1076,48 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
         );
       }
 
+      // Candidate's 4 verified credentials list
+      const candidateCerts = [
+        {
+          id: "CERT-ML-8810",
+          title: "Machine Learning Certification",
+          issuer: "Global Credential Authority",
+          issueDate: "Sep 2023",
+          serialHash: certHash.trim() || "0x77A19902FF118833",
+          verified: !isWrongCert,
+          verificationTimestamp: isWrongCert
+            ? "Tampered Hash: Serial Key not found in Issuer Registry"
+            : "Verified on Ledger: Cryptographic Hash Matched (Oct 2024)",
+        },
+        {
+          id: "CERT-PY-4402",
+          title: "Advanced Python Programming",
+          issuer: "Coursera / DeepLearning.AI",
+          issueDate: "Aug 2022",
+          serialHash: "0x7A4F89D201B456C1",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: Coursera Credential API Authenticated",
+        },
+        {
+          id: "CERT-AWS-9912",
+          title: "Cloud & AWS Fundamentals",
+          issuer: "AWS Training",
+          issueDate: "Mar 2023",
+          serialHash: "0x88F1AA99BB3344EE",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: AWS Digital Badge Confirmed",
+        },
+        {
+          id: "CERT-SIH-2024",
+          title: "Smart India Hackathon Finalist Credential",
+          issuer: "SIH 2024",
+          issueDate: "Oct 2024",
+          serialHash: "0xSIH2024E10177A8",
+          verified: true,
+          verificationTimestamp: "Verified on Ledger: MoE Innovation Cell / AICTE Depository",
+        },
+      ];
+
       setScanResult({
         candidateName: candidateName.trim(),
         profileUrl:
@@ -1072,6 +1145,7 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
           ? "Degree Claim Flagged: Transcript Checksum Failed"
           : "University Degree & AICTE Accredited",
         flags,
+        certificates: candidateCerts,
         timestamp: new Date().toLocaleTimeString("en-IN", {
           hour: "2-digit",
           minute: "2-digit",
@@ -1140,14 +1214,14 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
           verified: true,
         },
       },
-      certificates: [
+      certificates: scanResult.certificates || [
         {
-          id: "CERT-LIVE-001",
-          title: `${scanResult.appliedRole} Certification`,
+          id: "CERT-ML-8810",
+          title: "Machine Learning Certification",
           issuer: "Global Credential Authority",
           issueDate: "2023",
           serialHash: scanResult.certHash,
-          verified: !scanResult.isSuspicious,
+          verified: !scanResult.isWrongCert,
           verificationTimestamp: scanResult.certHashStatus,
         },
       ],
@@ -1533,6 +1607,117 @@ function LiveAuthenticatorTool({ onAddCandidate }) {
                 {scanResult.educationStatus}
               </p>
               <p className="text-[10px] text-slate-500">Verified via National Academic Depository</p>
+            </div>
+          </div>
+
+          {/* Candidate Verification Summary Strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">Total Certificates</span>
+              <p className="text-xl font-bold text-white mt-0.5">
+                {scanResult.certificates?.length || 4} Credentials
+              </p>
+            </div>
+            <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">Verified on Ledger</span>
+              <p className="text-xl font-bold text-emerald-400 mt-0.5">
+                {scanResult.certificates?.filter((c) => c.verified).length ?? (scanResult.isWrongCert ? 3 : 4)} Authentic
+              </p>
+            </div>
+            <div className="bg-slate-800/60 border border-slate-700/70 rounded-xl p-3">
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">Discrepancy / Tamper Flags</span>
+              <p className={`text-xl font-bold mt-0.5 ${scanResult.isWrongCert ? "text-rose-400" : "text-slate-400"}`}>
+                {scanResult.certificates?.filter((c) => !c.verified).length ?? (scanResult.isWrongCert ? 1 : 0)} Detected
+              </p>
+            </div>
+          </div>
+
+          {/* Earned Certifications & Cryptographic Hashes */}
+          <div className="space-y-3 pt-1">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs text-slate-300 font-bold uppercase tracking-wider flex items-center gap-2">
+                <Award size={15} className="text-indigo-400" />
+                Earned Certifications & Cryptographic Hashes ({scanResult.certificates?.length || 4})
+              </h4>
+              <span className="text-[10px] text-indigo-400 font-mono bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/60">
+                Ledger Vault Synchronized
+              </span>
+            </div>
+
+            <div className="space-y-3">
+              {scanResult.certificates?.map((cert) => (
+                <div
+                  key={cert.id}
+                  className={`p-3.5 rounded-xl border transition-all ${
+                    cert.verified
+                      ? "bg-slate-800/40 border-slate-700/80 hover:border-emerald-500/50"
+                      : "bg-rose-950/20 border-rose-800/80 hover:border-rose-600"
+                  }`}
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-sm font-bold text-white">{cert.title}</span>
+                        <span className="text-xs bg-slate-800 text-slate-300 font-semibold px-2 py-0.5 rounded border border-slate-700">
+                          {cert.issuer}
+                        </span>
+                        {cert.verified ? (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60">
+                            <CheckCircle2 size={12} /> Authentic
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-800/60">
+                            <XCircle size={12} /> Hash Discrepancy
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-3 text-xs text-slate-400">
+                        <span>Issued: <strong className="text-slate-300">{cert.issueDate}</strong></span>
+                        <span>•</span>
+                        <span>Cert ID: <code className="text-slate-300 font-mono">{cert.id}</code></span>
+                      </div>
+
+                      {/* Cryptographic Hash Bar */}
+                      <div className="mt-1.5 flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
+                        <Hash size={13} className="text-indigo-400 shrink-0" />
+                        <span className="text-slate-400 text-[11px]">Serial Hash:</span>
+                        <span className={`font-semibold ${cert.verified ? "text-indigo-300" : "text-rose-400"}`}>
+                          {cert.serialHash}
+                        </span>
+                      </div>
+
+                      <p className="text-[11px] text-slate-500 mt-1">{cert.verificationTimestamp}</p>
+                    </div>
+
+                    {/* Verify Action Button */}
+                    <div className="sm:self-center shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleVerifyScanCert(cert)}
+                        disabled={verifyingScanCertId === cert.id}
+                        className={`w-full sm:w-auto px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-all ${
+                          cert.verified
+                            ? "bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
+                            : "bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-900/40"
+                        }`}
+                      >
+                        {verifyingScanCertId === cert.id ? (
+                          <>
+                            <RefreshCw size={12} className="animate-spin text-indigo-400" />
+                            <span>Auditing...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Fingerprint size={12} />
+                            <span>Verify Hash Key</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
